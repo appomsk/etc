@@ -1,0 +1,41 @@
+# vim: ft=sh
+
+APP=perl
+
+[ "$HOME" ] && [ "$ETC" ] && [ "$LIB" ] && [ "$VAR" ] || { 
+    echo "
+Error: configuration variables are not set: 
+\$HOME: $HOME
+\$ETC:  $ETC
+\$LIB:  $LIB
+\$VAR:  $VAR
+" >&2
+return 1
+}
+
+PROFILED="$VAR/profile.d"
+[ -e "$PROFILED" ] || {
+    echo "$PROFILED does not exist" >&2; exit 1; }
+
+b=$LIB/$APP/bin
+
+[ -e $b ] && ! [ -L $b ] \
+    && echo "Error: $b exist and it is not a link" >&2 \
+    && return 1
+
+mkdir -p $LIB/$APP
+ln -sf $HOME/.local/bin $b
+
+cat <<'END' >$PROFILED/$APP-dirs
+export PERL_BASE=$LIB/perl
+# export PATH="$PERL_BASE/bin${PATH:+:$PATH}"
+export PERL_MM_OPT="INSTALL_BASE=$PERL_BASE"
+export PERL_MB_OPT="--install_base $PERL_BASE"
+export PERL5LIB="$PERL_BASE/lib/perl5"
+export MANPATH="$PERL_BASE/man${MANPATH:+:$MANPATH}"
+END
+
+
+
+
+
