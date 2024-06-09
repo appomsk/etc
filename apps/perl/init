@@ -1,9 +1,5 @@
 # vim: ft=sh
 
-# TODO test it better
-
-APP=perl
-
 [ "$HOME" ] && [ "$ETC" ] && [ "$LIB" ] && [ "$VAR" ] || { 
     echo "
 Error: configuration variables are not set: 
@@ -19,8 +15,8 @@ PROFILED="$VAR/profile.d"
 [ -e "$PROFILED" ] || {
     echo "$PROFILED does not exist" >&2; exit 1; }
 
-mkdir -p $LIB/$APP
 
+mkdir -p $LIB/perl
 cat <<'END' >$PROFILED/$APP-dirs
 export PERL_BASE=$LIB/perl
 

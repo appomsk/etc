@@ -1,7 +1,5 @@
 # vim: ft=sh
 
-APP=ruby
-
 [ "$HOME" ] && [ "$ETC" ] && [ "$LIB" ] && [ "$VAR" ] || { 
     echo "
 Error: configuration variables are not set: 
@@ -17,8 +15,7 @@ PROFILED="$VAR/profile.d"
 [ -e "$PROFILED" ] || {
     echo "$PROFILED does not exist" >&2; exit 1; }
 
-mkdir -p $LIB/$APP
-
+mkdir -p $LIB/ruby
 cat <<'END' >$PROFILED/$APP-dirs
 GEM_HOME="$LIB/ruby"
 export GEM_HOME
