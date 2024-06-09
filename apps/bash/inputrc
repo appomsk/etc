@@ -1,0 +1,133 @@
+# You can re-read the inputrc file with C-x C-r.
+# You can see current bindings with bind -V
+# Lines beginning with '#' are comments.
+#
+# First, include any systemwide bindings and variable assignments from
+# /etc/inputrc
+
+# Be 8 bit clean.
+set input-meta off
+set output-meta on
+
+# To allow the use of 8bit-characters like the german umlauts, uncomment
+# the line below. However this makes the meta key not work as a meta key,
+# which is annoying to those which don't need to type in 8-bit characters.
+
+# set convert-meta off
+
+# try to enable the application keypad when it is called.  Some systems
+# need this to enable the arrow keys.
+# set enable-keypad on
+
+# see /usr/share/doc/bash/inputrc.arrows for other codes of arrow keys
+
+# do not bell on tab-completion
+# set bell-style none
+# set bell-style visible
+
+# some defaults / modifications for the emacs mode
+$if mode=emacs
+
+# allow the use of the Home/End keys
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+# allow the use of the Delete/Insert keys
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+
+# mappings for "page up" and "page down" to step to the beginning/end
+# of the history
+# "\e[5~": beginning-of-history
+# "\e[6~": end-of-history
+
+# alternate mappings for "page up" and "page down" to search the history
+# "\e[5~": history-search-backward
+# "\e[6~": history-search-forward
+
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+$if term=rxvt
+"\e[7~": beginning-of-line
+"\e[8~": end-of-line
+"\eOc": forward-word
+"\eOd": backward-word
+$endif
+
+# for non RH/Debian xterm, can't hurt for RH/Debian xterm
+# "\eOH": beginning-of-line
+# "\eOF": end-of-line
+
+# for freebsd console
+# "\e[H": beginning-of-line
+# "\e[F": end-of-line
+
+$endif
+set editing-mode emacs
+
+# If you have this in your /etc/inputrc or ~/.inputrc, you will no longer
+# have to hit the <Tab> key twice to produce a list of all possible
+# completions. A single <Tab>  will suffice.
+set show-all-if-ambiguous on
+
+# Completed names which are symbolic links to
+# directories have a slash appended.
+set mark-symlinked-directories on
+
+# use a visible bell if one is available
+set bell-style visible
+
+# if there are more than 150 possible completions for a word, ask the
+# user if he wants to see all of them
+set completion-query-items 100
+
+# bindings
+
+# doesn't work
+"\e[2~":	paste-from-clipboard	Insert
+"\e[5~":        history-search-backward	PgUp
+"\e[6~":        history-search-forward	PgDn
+"\ep":          history-search-backward
+"\en":          history-search-forward
+
+# On console the first five function keys
+# in xterm - others
+
+$if term=linux
+    "\e[[A":	"\e[1~man \e[4~\C-M"	F1
+    # "\e[[B":	"\e[1~cyg-wrapper.sh bash --binary-opt=-c --fork=2 -c \"\e[4~\"\C-M"  F2
+    "\e[[B":        ""   F2
+    "\e[[C":	""
+    "\e[[D":	""
+$endif
+
+$if term=xterm
+    "\eOP":    "\C-Aman \C-E\C-M"
+$endif
+
+#
+# Set various bindings for emacs mode.
+
+# Macros that are convenient for shell interaction
+$if Bash
+# edit the path
+"\C-xp": "PATH=${PATH}\e\C-e\C-a\ef\C-f"
+# prepare to type a quoted word -- insert open and close double quotes
+# and move to just after the open quote
+"\C-x\"": "\"\"\C-b"
+# Add a binding to refresh the line, which is unbound
+"\C-xr": redraw-current-line
+# Edit variable on current line.
+"\M-\C-v": "\C-a\C-k$\C-y\M-\C-e\C-a\C-y="
+$endif
+
+
+"\ek": kill-line 
+
+set blink-matching-paren on

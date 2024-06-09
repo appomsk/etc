@@ -1,5 +1,8 @@
 #!/bin/sh
 
+{ command -v curl && command -v git; } >/dev/null ||
+{ echo Install curl and git >&2; exit 1; }
+
 # get ETC, VAR, LIB
 . $(dirname $0)/../profile
 
@@ -24,9 +27,29 @@ for f in $ETC/bin/*; do
 done
 
 # xdg
-$ETC/util/fix-xdg
+mkdir -p $HOME/.config
+
+cat <<END >$HOME/.config/user-dirs.dirs
+XDG_DESKTOP_DIR="$LIB/xdg/top/"
+XDG_DOWNLOAD_DIR="$LIB/xdg/load/"
+XDG_TEMPLATES_DIR="$LIB/xdg/templates/"
+XDG_PUBLICSHARE_DIR="$LIB/xdg/share/"
+XDG_DOCUMENTS_DIR="$LIB/xdg/documents/"
+XDG_MUSIC_DIR="$LIB/xdg/music/"
+XDG_PICTURES_DIR="$LIB/xdg/pictures/"
+XDG_VIDEOS_DIR="$LIB/xdg/videos/"
+END
 
 # init
 for app in $ETC/apps/*; do
     [ -f "$app/init" ] && sh "$app/init"
 done
+
+# private config TODO
+cd $HOME
+mkdir -p .ssh
+chmod 700 .ssh
+cd .ssh
+chmod 600 *
+
+true

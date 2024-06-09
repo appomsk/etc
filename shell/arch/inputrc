@@ -1,0 +1,72 @@
+# You can re-read the inputrc file with C-x C-r.
+# You can see current bindings with bind -V
+# Lines beginning with '#' are comments.
+#
+# First, include any systemwide bindings and variable assignments from
+# /etc/inputrc
+$include /etc/inputrc
+
+set editing-mode emacs
+
+# If you have this in your /etc/inputrc or ~/.inputrc, you will no longer
+# have to hit the <Tab> key twice to produce a list of all possible
+# completions. A single <Tab>  will suffice.
+set show-all-if-ambiguous on
+
+# Completed names which are symbolic links to
+# directories have a slash appended.
+set mark-symlinked-directories on
+
+# use a visible bell if one is available
+set bell-style visible
+
+# if there are more than 150 possible completions for a word, ask the
+# user if he wants to see all of them
+set completion-query-items 100
+
+# bindings
+
+# doesn't work
+"\e[2~":	paste-from-clipboard	Insert
+"\e[5~":        history-search-backward	PgUp
+"\e[6~":        history-search-forward	PgDn
+"\ep":          history-search-backward
+"\en":          history-search-forward
+
+# Function keys F1 - F12
+#
+
+#
+# On console the first five function keys
+# in xterm - others
+
+$if term=linux
+    "\e[[A":	"\e[1~man \e[4~\C-M"	F1
+    # "\e[[B":	"\e[1~cyg-wrapper.sh bash --binary-opt=-c --fork=2 -c \"\e[4~\"\C-M"  F2
+    "\e[[B":        ""   F2
+    "\e[[C":	""
+    "\e[[D":	""
+$endif
+
+$if term=xterm
+    "\eOP":    "\C-Aman \C-E\C-M"
+$endif
+
+#
+# Set various bindings for emacs mode.
+
+# Macros that are convenient for shell interaction
+$if Bash
+# edit the path
+"\C-xp": "PATH=${PATH}\e\C-e\C-a\ef\C-f"
+# prepare to type a quoted word -- insert open and close double quotes
+# and move to just after the open quote
+"\C-x\"": "\"\"\C-b"
+# Add a binding to refresh the line, which is unbound
+"\C-xr": redraw-current-line
+# Edit variable on current line.
+"\M-\C-v": "\C-a\C-k$\C-y\M-\C-e\C-a\C-y="
+$endif
+
+"\M-\C-h":	backward-kill-word	Text after the function name is ignored
+

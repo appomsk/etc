@@ -1,0 +1,131 @@
+# -*- mode: Shell -*- vim: ft=sh
+
+## Update
+#    pkup:  Update/upgrade the system
+#    pkupa: Update/upgrade the system with AUR
+
+alias pkup='sudo pamac upgrade'
+# with AUR TODO
+alias pkupa='sudo pamac upgrade -a'
+alias pkupdate-upgrade-arch='sudo pacman -Syu'
+
+# update the local database
+alias pkupdate='pamac checkupdates -a'
+alias pkupdate-arch='sudo pacman -Sy'
+
+# force update the local database (even if they up to date)
+# If you have any update issues
+alias pkupf='sudo pamac update --force-update'
+alias pkupdate-force-arch='sudo pacman -Syy'
+
+# upgrade packages (after update) 
+alias pkupgrade-arch='sudo pacman -Su'
+
+## Install 
+#    pki  PKG: install package
+#    pkia PKG: install package with AUR
+
+alias pki='sudo -S pamac install --no-confirm'
+alias pkia='sudo -S pamac build --no-confirm'
+alias pkinstall-arch='sudo pacman -Syu'
+
+# install local package or from URL
+alias pkinstall-local-arch='sudo pacman -U'
+
+## Remove
+#    pkr PKG: remove package
+
+alias pkr='sudo pamac remove'
+
+# remove package with dependencies
+alias pkremove-dep-arch='sudo pacman -Rsun'
+
+# remove package even it is needed. CAUTION
+alias pkremove-force-arch='sudo pacman -Rcn'
+
+## Search 
+#    pks  PAT [PAT2]: Search PAT & PAT2 in known packages
+#    pksa PAT [PAT2]: Search PAT & PAT2 with AUR packages 
+
+_pamac-search(){
+# `fmt 81` to mimic original `pamac search`
+
+    local opt="$1"
+    shift
+
+    local USAGE="Usage: $0 PAT [PAT2]"
+    if [ $# -eq 1 ]; then
+        pamac search "$opt" "$1"
+    elif [ $# -eq 2 ]; then
+        pamac search "$opt" "$1"                         \
+            | sed -E 's/^.* {10,}.*$/\n&%%%/'     \
+            | perl -00 -ple 's/\n    / /g'        \
+            | grep -i "$2"                        \
+            | sed 's/%%% */\n    /'               \
+            | fmt -81
+    else
+        echo "$USAGE"
+    fi | less -r -eFiRX
+}
+alias pks='_pamac-search --no-aur'
+alias pksa='_pamac-search --aur'
+
+# search re pattern in package names and descriptions
+alias pksearch='pamac search'
+alias pksearcha='pamac search -a'
+alias pksearch-arch='pacman -Ss' 
+
+# search pattern in installed packages
+# pksi REGEX
+alias pksearchi-arch='pacman -Qs'
+
+## Info
+#    pkd PKG: describe a package
+
+alias pkd='pamac info'
+alias pkdescription-arch='pacman -Si'
+
+# full description but only for installed
+alias pkdescription-installed-arch='pacman -Qi'
+
+## Files
+#    pkl PKG: list all files owned by a package
+
+alias pkl='pamac list -f'
+alias pklist-files-arch='pacman -Ql'
+
+## File owner
+#    pkf FILENAMEPART: Find package that owns the file
+
+# searches for given string in filename
+alias pkf='pamac search -f'
+alias pkfile-arch='pacman -Qo'
+
+## Packages
+#    pkp: list all installed packages
+
+alias pkp='pamac list -i'
+alias pklist-installed-packages-arch='pacman -Q'
+
+# list all the groups that can be installed
+alias pklg='pamac -g'
+alias pklist-groups-arch='pacman -Sg'
+
+# list orphans
+alias pklo='pacman -Qdt'
+
+## Clean
+#    pkc: Clean the system
+
+alias pkc='sudo pamac clean && sudo pamac remove -o'
+alias pkclean-arch='sudo pacman -Scc'
+
+## More
+#
+# * https://wiki.manjaro.org/index.php/Pamac
+#
+# * https://wiki.manjaro.org/index.php/Pacman_Overview
+#
+# * https://wiki.archlinux.org/title/Pacman
+#
+# * There are pactree, pacsearch, paclist in pacman-contrib package

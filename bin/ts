@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# print rows and columns of the terminal window
+stty -a | head -1 | tr -d \; | cut -d' ' -f4-7  \
+        | xargs printf "%-10s%3d\n%-10s%3d\n"
+
+# | awk '{ printf "%-10s%3d\n%-10s%3d\n", $1, $2, $3, $4}'
+
+# doesn't work in script (alias OK)
+# printf "%-10s%3d\n%-10s%3d\n" rows $LINES columns $COLUMNS
+

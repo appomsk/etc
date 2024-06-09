@@ -1,0 +1,9 @@
+#!/bin/sh
+case $# in 
+    0) echo "Usage: $(basename $0) [path] name" ;;
+    1) path=. name="$1";;
+    2) path="$1" name="$2";;
+    *) echo "Usage: $(basename $0) [path] name [args]" ;;
+esac 
+find "$path" \( ! -regex '.*/\..*' \) -type d -iname "*$name*" |
+                        grep -i --color=always "$name" | less -eFiRX

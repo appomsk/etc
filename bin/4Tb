@@ -1,0 +1,20 @@
+#!/bin/sh
+
+USAGE="Usage: $(basename $0) STRING | -U"
+DB=$HOME/junk/stuff/4Tb.db
+
+[ $# -eq 0 ] && { echo "$USAGE"; exit; }
+
+case $1 in
+    -h | --help) 
+        echo "$USAGE"; exit ;;
+    -U) 
+        if mount | grep -q 4Tb; then 
+            updatedb -l0 -o "$DB" -U /media/yazu/4Tb
+        else
+            echo "4Tb does not mount" >&2
+            exit 1
+        fi ;;
+    *) 
+        locate -d "$DB" "$@" ;;
+esac

@@ -1,0 +1,8 @@
+# for sourcing by scripts, but now I don't use it
+# in .zshrc exported CONFDIR and NOTESDIR
+
+# CONFDIR=$HOME/etc/conf
+# NOTESDIR=$HOME/etc/notes
+SCRIPTS=$CONF/scripts
+DOTFILES=$HOME/etc/conf/dot
+SHRC=$HOME/etc/conf/shell/shrc_common

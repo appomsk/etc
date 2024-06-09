@@ -1,0 +1,11 @@
+#!/bin/sh
+# Show existing aliases, sorted
+# only source because aliases do not work in scripts
+gits() {
+    alias |
+    awk -F= -v q=\' '/git/ && length($1) < 12 {
+        gsub(q, "") 
+        printf "%-12s=\t%.60s%s\n", $1, $2, length($2) < 60 ? "" : "..."
+    }' | sort | less -eFiRX -r
+}
+

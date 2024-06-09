@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# TODO getarg for `pen -d PEN` of `pen PEN -d`
+# for date without header 
+
+firstline='M | S | P | H | C | J'
+secondline='Math|Science|Philosophy|Human|Computers|Junk'
+USAGE="Usage: [-h|--help] $(basename "$0") [PAD] [TITLE]
+    where PAD is one of $firstline,
+    which means - $secondline.
+
+    Without title the script opens PAD in view mode.
+    Without any arguments it opens Junk in view mode.
+
+    \$PENSDIR must be set before using this script."
+
+error() 
+{
+    echo "$*" >&2
+    exit 1
+}
+
+case "$1" in
+    -h | --help) echo "$USAGE" && exit ;;
+esac
+
+[ -z "$PENSDIR" ] && error Set PENSDIR variable
+
+[ $# -eq 0 ] && set -- J
+
+echo "$firstline" | grep -q -- "$1" || error "$USAGE"
+
+PAD="$PENSDIR/$1.notes"
+shift
+
+# echo $PAD && exit
+if [ $# -eq 0 ]; then
+    $EDITOR -R + -- "$PAD"
+else
+    { 
+        echo
+        echo -n '%%% '
+        echo -n $(date '+%F %R %a %:::z') 
+        echo ' %%%'
+        echo
+        echo "$*"
+        echo "$*" | sed s/./=/g
+        echo
+        echo
+    } >>"$PAD" 
+    $EDITOR + "$PAD"
+fi

@@ -1,0 +1,327 @@
+# vim: ft=sh fdm=marker
+
+# in .bashrc: alias noglob= # seems to work.
+# It's simple to manage noglobs here
+
+# Environment {{{
+
+SHRC_DIR=`dirname $0`
+if [ "$BASH_SOURCE" ]; then
+    SHRC_DIR=`dirname ${BASH_SOURCE}`
+fi
+
+export LESS='FReiq'
+export PAGER=less
+
+export EDITOR=vim
+if command -v nvim >& /dev/null; then
+    export EDITOR=nvim
+
+    alias nv=nvim
+    alias nvv='nvim -R'
+    alias nvdiff='nvim -d'
+fi
+
+export VISUAL=$EDITOR
+
+alias v=$EDITOR
+alias vv='v -R'
+alias vdiff='v -d' v=$EDITOR
+
+# alias m='less -eFiRX'
+# TRY - NOT!
+# if command -v bat >& /dev/null; then
+#     export PAGER=bat
+#     alias v=bat
+# fi
+
+# colors for man-pages NO NEED - see alias for man
+# export LESS_TERMCAP_mb=$'\E[01;32m'
+# export LESS_TERMCAP_md=$'\E[01;32m'
+# export LESS_TERMCAP_me=$'\E[0m'
+# export LESS_TERMCAP_se=$'\E[0m'
+# export LESS_TERMCAP_so=$'\E[01;47;34m'
+# export LESS_TERMCAP_ue=$'\E[0m'
+# export LESS_TERMCAP_us=$'\E[01;36m'
+
+# try not create core files
+ulimit -S -c 0 >&/dev/null
+# Settings for umask
+umask 002
+
+eval "$(dircolors)"
+# Change unreadable other writable dirs (for fat and ntfs):
+export LS_COLORS="$LS_COLORS:ow=01;35:"
+
+export LANG=en_US.UTF-8
+# LC_ALL override every other LC_* variable
+export LC_ALL=C.UTF-8
+# }}}
+# {{{ Includes
+
+source $SHRC_DIR/gits
+
+# }}}
+# Debian/Arch/Manjaro {{{
+# there are similar commands for arch and fedora
+# TODO pklf - list files of package
+case `lsb_release -d` in
+*Debian* | *Ubuntu* | *Mint*)
+    # clean
+    alias pkc='sudo apt-get clean && sudo apt-get -y autoremove'
+    # upgrade
+    alias pkup='sudo apt-get update \
+        && sudo apt-get -y upgrade \
+        && sudo apt-get clean'
+    # update
+    alias pkupd='sudo apt-get update'
+    # search package names
+    alias pks='aptitude search'
+    # search pattern in descriptions
+    alias pkss='apt-cache search'
+    # apt-xapian-index - the best but 100 mgb cache + daemons
+    alias pksx='axi-cache search'
+    # describe package
+    alias pkd='apt show'
+    alias pkd1='apt-cache show'
+    # install
+    alias pki='sudo apt-get install'
+    alias pki1='sudo apt install'
+    # what package owns file
+    alias pkf='dpkg -S'
+    # remove package
+    alias pkr='sudo apt-get purge'
+    # no purge
+    alias pkr1='sudo apt remove --purge'
+    # list installed packages
+    alias pkl='apt --installed list'
+    # list all packages in the system
+    alias pkls="dpkg -l | tail -n+6 | \
+        awk '{printf \"%-4s%-50s %s\n\", \$1, \$2, \$3}'"
+    # list all known packages
+    alias pkla='2>/dev/null noglob apt list'
+    alias pkla1='apt-cache pkgnames'
+    # statistics
+    alias pkst='apt-cache stats'
+
+    alias pki='noglob sudo apt-get install '
+    alias pkr='noglob sudo apt-get remove --purge '
+
+# OTHER
+
+    # and ln -s $HOME/bin/fd /usr/bin/fdfind
+    alias fd='noglob fdfind ' 
+    ;;
+# TODO: 
+*Manjaro*)
+    local src=$SHRC_DIR/pamac.src
+    alias pkview="$PAGER $src"
+    alias pkv="cat $src            \
+        | sed -n '/^##/,/^$/p'     \
+        | sed 's/^## //; s/^#//'   \
+        | $PAGER"
+    source $src
+    ;;
+*Arch*)
+    # clean
+    alias pkc='sudo pacman -Scc'
+    # upgrade
+    alias pkup='sudo pacman -Syu'
+    # update
+    alias pkupd='sudo pacman -Syy'
+    # search re pattern in package names and descriptions
+    alias pks='pacman -Ss' 
+    # search pattern in installed packages
+    alias pkss='pacman -Qs'
+    # describe noinstalled package
+    alias pkd='pacman -Si'
+    # full description but only for installed
+    alias pkdi='pacman -Qi'
+    # install
+    alias pki='sudo pacman -Syu'
+    # install local package or from URL: pacman -U
+    # what package owns file
+    alias pkf='pacman -Qo'
+    # remove package with dependencies
+    alias pkr='sudo pacman -Rsun'
+    # remove package: pacman -R
+    # list files in package
+    # list all packages in the system
+    alias pkls='pacman -Q'
+    ;;
+*SUSE*)
+    alias pki='sudo -S zypper install -y'
+    alias pkd='zypper -q info'
+    alias pks='zypper -q search'
+    alias pkup='sudo -S zypper dup'
+    alias pkr='sudo -S zypper remove'
+esac
+# }}}
+# {{{ cd
+function cd(){
+    if [ $# = 1 ]  && [ -f "$1" ]; then
+        builtin cd "${1%/*}"
+    else
+        builtin cd "$@"
+    fi
+}
+
+cdl ()
+{
+	cd "$@"
+	ls --color=auto
+}
+alias ..='cd .. && l'
+alias ...='cd ../.. && l'
+alias ....='cd ../../.. && l'
+alias cd-='cd - && l'
+
+# go to the real directory
+alias cdr='cd -P . && cd'
+
+# function dirs() {
+#     builtin dirs |
+#     awk  '{gsub(/ ~/, "!~"); gsub(/ \//, "!/") ; n=split($0,arr,"!") ;
+#         for (i=1;i<=n;++i) printf "%2d  %s\n", i-1, arr[i] }'
+# }
+# }}}
+# Colors for man {{{
+alias man="\
+LESS_TERMCAP_mb=$'\e[6m'         \
+LESS_TERMCAP_md=$'\e[34m'        \
+LESS_TERMCAP_us=$'\e[4;32m'      \
+LESS_TERMCAP_so=$'\e[1;33;40m'   \
+LESS_TERMCAP_me=$'\e[m'          \
+LESS_TERMCAP_ue=$'\e[m'          \
+LESS_TERMCAP_se=$'\e[m'          \
+man"
+# }}}
+#  site-dl {{{
+# Download whole site
+
+# --mirror – Makes (among other things) the download recursive.
+# 
+# --convert-links – convert all the links (also to stuff like CSS stylesheets)
+# to relative, so it will be suitable for offline viewing.
+# 
+# --adjust-extension – Adds suitable extensions to filenames (html or css)
+# depending on their content-type.
+# 
+# --page-requisites – Download things like CSS style-sheets and images required
+# to properly display the page offline.
+# 
+# --no-parent – When recursing do not ascend to the parent directory. It useful
+# for restricting the download to only a portion of the site.
+
+alias site-dl='wget --mirror --convert-links \
+    --adjust-extension --page-requisites --no-parent' 
+# }}}
+# {{{ Misc shortcuts
+alias chx='chmod +x'
+
+alias ls='ls --color=auto'
+alias l='ls'
+alias la='ls -A'
+alias ll='ls -lh'
+# alias l.='ls -d .[^.]*' # just quiet
+# dash does not understand [^...]
+alias l.='sh -c "ls --color -d .[!.]*" 2>/dev/null || true'
+
+alias free='free -h --si'
+
+# disk usage in pwd
+duh ()
+{
+    local dir=${1:-.}
+    if [ "$(ls -A $dir)" ]; then
+        du -sch $dir/*
+    else
+        echo "Empty"
+    fi
+}
+
+alias dfh='df -H .'
+
+# install xclip
+alias xc='xclip -i -selection clipboard'
+alias xp='xclip -o -selection clipboard'
+
+function calc {
+  python3 -c 'from math import *; print('"$*"')'
+}
+
+# like windows/mac open or cygstart
+alias xopen=xdg-open
+
+# verbose, create nonexisting directories, skip existing
+function md
+{
+	mkdir -vp "$1"
+	cd "$1"
+}
+alias mkdir='mkdir -p'
+
+# remove caps at all!
+# install xdotool (doesn't work with using Caps as Ctrl?)
+alias caps='xdotool key Caps_Lock'
+alias CAPS=caps
+
+# Simplified man pages
+# tldr in debian reps
+# `cheat`: https://github.com/cheat/cheat/releases
+# `busybox COMMAND --help` (prints to tty not to stdout?)
+function _M() {
+    local cmd=tldr
+    case $1 in
+        -c | --cheat) 
+            cmd=cheat
+            shift;;
+        -b | --busy)
+            cmd=busybox
+            shift
+            set -- --help "$@";;
+    esac
+
+    $cmd "$@" | less -FReiq
+} 
+alias M=_M
+
+# Quick edit configs
+alias ez='vim ~/.zshrc && source ~/.zshrc'
+alias et='vim ~/.tmux.conf'
+alias es='vim ~/etc/conf/shell/shrc_common &&
+                source ~/etc/conf/shell/shrc_common'
+
+alias out='tmux kill-server 2>/dev/null; exit'
+
+alias ts='printf "%-10s%3d\n%-10s%3d\n" rows $LINES columns $COLUMNS'
+
+# GUI
+fx=firefox
+alias ee=subl
+alias br=falkon
+guify() {
+    exe=`shift`
+    ($exe "$@" &)
+} 2>&1 >/dev/null
+alias fm='guify dolphin'
+
+alias notmux='(konsole --profile no-tmux >/dev/null 2>&1 &)'
+# }}}
+# {{{ Noglobs
+
+alias find='noglob find'
+alias fd='noglob fd'
+alias apt-get='noglob apt-get'
+alias expr='noglob expr'
+
+alias calc='noglob calc '
+alias fdd='noglob find-dir '
+alias fdf='noglob find-file '
+alias ff=fdf
+
+alias y='noglob youtube-dl'
+alias aria='noglob aria2c'
+alias lynx='noglob lynx'
+
+# }}}

@@ -1,0 +1,8 @@
+#!/bin/sh
+if test $# = 2  ; then
+    find "$1" -iname "*$2*" | grep -i --color=auto "$2"
+elif test $# = 1  ; then
+    find . -iname "*$1*"  | grep -i --color=auto "$1"
+else
+    echo "Usage: $(basename $0) [dir] string" >&2
+fi

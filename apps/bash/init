@@ -13,6 +13,5 @@ exit 1
 
 app=$(realpath $(dirname $0))
 
-ln -sf $app/Rprofile $HOME/.Rprofile
-
-mkdir -p "$HOME/$LIB/R/Rlib"
+ln -sf $app/bashrc  $HOME/.bashrc
+ln -sf $app/inputrc $HOME/.inputrc

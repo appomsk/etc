@@ -1,0 +1,97 @@
+# vim: ft=sh
+
+### General
+# Most common (and gs is for ghostscript)
+alias gg='git status -s'
+# git config --global alias.g 'status -s'
+
+galias() { git config --global alias.$1 "$2"; }
+
+# git version of md - Mkdir NAME && cD NAME
+gmd() { git init "$1" && cd "$1"; }
+# of course it doesn't work:
+# galias md 'init "$1" && cd "$1"'
+
+### Add & commit
+alias   ga='git add'
+alias  ga.='git add .'
+alias  gaa='git add -A'
+alias gcam='git commit -a -m'
+alias gacm='git commit -a -m'
+alias   gc='git commit -a -m'
+alias  gca='git commit -a'
+alias  gcm='git commit -m'
+alias  gci='git commit'
+
+### Branch & merging
+alias   gb='git switch'
+alias  gbr='git branch'
+alias  gbl='git branch'
+alias gbll='git branch -a'
+alias  gbc='git switch -C'
+alias gbco='git checkout -b'
+alias  gbd='git branch -D'
+alias  gco='git checkout'
+alias   gm='git merge'
+# TODO just grebase?
+alias gup='git rebase'
+
+## TODO
+### GOOPS!
+# redo commit (edit message, add new files from stage)
+alias gamend='git commit --amend'
+# add some modified files to the last commit
+gamendf() { git add "$@" && git commit --amend --no-edit; }
+
+### Redo (restore, reset, revert, etc.)
+# redo add (usually exclude some files from commiting)
+alias gradd='git reset HEAD --'
+# move last commit back in stash
+alias grlast='git reset --soft HEAD~1'
+# with new commit
+alias gr='git revert'
+# without commit
+alias grst='git reset'
+
+### Stash
+# with untracked but without ignored, -a|--all for them
+alias gss='git stash -u'    # save
+alias gsp='git stash pop'
+alias gsd='git stash drop'
+alias gsl='git stash list'
+
+### Remotes
+alias  gp='git push'
+alias gpl='git pull'
+alias  gf='git fetch'
+alias gcl='git clone'
+
+### Info
+# alias gist='git status' -> gg
+alias gconf='git config --list --show-origin'
+alias gd='git diff HEAD'
+alias gdi='command -v tig >/dev/null && tig show || git diff HEAD'
+alias gdiff='git difftool -y'
+alias glog='git log'
+alias gl='git log \
+    --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]"\
+    --decorate'
+alias gll='git log \
+    --pretty=format:"%C(yellow)%h%Cred%d Creset%s%Cblue [%cn]"\
+    --decorate --numstat'
+alias gld='git log \
+    --pretty=format:"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]"\
+    --decorate --date=short'
+# show log for a file
+alias glf='git log -u'
+alias gsh='git show'
+alias gre='git grep'
+
+alias glsf='git list-files'
+
+# exported in .zshrc
+alias gits='view $CONFDIR/shell/gits'
+alias git-notes='view $NOTESDIR/comp/git'
+alias gnote=git-notes
+alias git-sheet='view $NOTESDIR/comp/git-cheat-sheet.md'
+alias gsheet=git-sheet

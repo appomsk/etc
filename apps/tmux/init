@@ -13,6 +13,9 @@ exit 1
 
 app=$(realpath $(dirname $0))
 
-ln -sf $app/Rprofile $HOME/.Rprofile
+# TODO: Plugins in $LIB/tmux
+ln -sf $app/tmux.conf $HOME/.tmux.conf
 
-mkdir -p "$HOME/$LIB/R/Rlib"
+mkdir -p $LIB/tmux
+cp $app/tmux-dark-medium.conf $LIB/tmux
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+[ -z "$NOTESDIR" ] && { echo "Set NOTESDIR variable" >&2; exit 1; }
+NOTES=$NOTESDIR/notes.notes
+
+if [ $# -gt 0 ]; then
+    echo -n '%%% '
+    date '+%F %R %a %:::z'
+    echo
+    [ $# != 0 ] && echo "$*" && echo "$*" | sed 's/./-/g' && echo
+    echo
+fi >>$NOTES
+
+# on the last line
+$EDITOR + $NOTES

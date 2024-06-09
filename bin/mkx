@@ -1,0 +1,55 @@
+#!/bin/sh
+
+usage() {
+    echo "
+Usage: $(basename $0) SCRIPTNAME" >&2
+    exit 1
+}
+
+line=3
+mkexec=1
+
+[ $# -ne 1 ] && { usage; }
+
+case $1 in 
+    *.py) echo "#!/usr/bin/python3
+
+def ${1%.*}():
+    pass
+
+if __name__ == '__main__':
+    ${1%.*}()
+" >"$1";; 
+    *.sh)
+        printf '%s\n\n\n' '#!/bin/bash' >"$1";;
+    *.pl)
+        printf '%s\n\n\n' '#!/usr/bin/perl -w' >"$1";;
+    *.rb) echo "#!/usr/bin/ruby
+
+def ${1%.*}
+  
+end
+
+if __FILE__ == "'$0'"
+  ${1%.*}
+end" >"$1"
+    line=4 ;; 
+    *.c)
+        printf \
+'#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+int main(int argc, char *argv[]) {
+    
+}' > "$1"
+        line=4
+        mkexec=
+        ;;
+    *) 
+        printf '%s\n\n\n' '#!/bin/sh' >"$1";;
+esac
+
+[ $mkexec ] && chmod +x "$1"
+
+$EDITOR +$line "$1" 

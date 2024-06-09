@@ -1,0 +1,18 @@
+#!/bin/sh
+
+error() {
+    echo "$@" >&2
+    exit 1
+}
+
+usage() {
+    echo "Usage: $(basename "$0") DIR"
+}
+
+[ $# = 1 ] || error "$(usage)"
+
+test -d "$1" || {
+    usage >&2; error "No such dir: $1" 
+}
+
+apack "$(basename "$1")".zip "$1"

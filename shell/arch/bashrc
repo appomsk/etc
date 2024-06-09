@@ -1,0 +1,34 @@
+source $HOME/etc/shell/shrc_common
+
+export HISTFILE="$HOME/var/bash_history"
+
+bashprompt () 
+{
+	. $HOME/bin/getprompt "$@"
+}
+
+eval `dircolors $HOME/etc/shell/DIR_COLORS`
+
+# If command fails echo :( 
+PS1="\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\
+\`if ! [ \$? = 0 ]; then echo ':( '; fi\`\$ "
+export PS1
+
+
+source /etc/bash_completion
+
+# can use ?*+@!(list)
+shopt -s extglob
+
+# all bashes with one history
+shopt -s histappend
+
+# saves in history with newlines, not with ";"
+# doesn't work after quit
+# shopt -s lithist
+
+
+# bindings
+# F5 to detach from terminal and run
+bind '"\e[15~":"\C-a(\C-e &> /dev/null &)\n"'
+

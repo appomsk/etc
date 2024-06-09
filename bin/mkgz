@@ -1,0 +1,15 @@
+#!/bin/sh
+
+usage="Usage: $(basename $0) [-f] DIR"
+
+format=tgz
+
+[ "$1" = -f ] && force=-f && shift
+
+[ $# = 1 ] || { echo "$usage" >&2; exit 1; }
+[ -d $1 ]  || { echo "$usage" >&2; exit 1; }
+command -v apack >/dev/null || { echo "Install atool" >&2; exit 1; }
+
+apack --quiet "$1.$format" "$1" || exit
+
+[ "$force" ] && echo "Removing $1..." && rm -rf "$1" || exit 0

@@ -1,0 +1,100 @@
+# common
+
+. $HOME/etc/shell/shrc_common
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+
+# Use modern completion system
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+
+eval `dircolors $HOME/etc/shell/DIR_COLORS`
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+HISTFILE=~/var/zsh-histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory extendedglob nomatch notify histignorealldups sharehistory
+
+bindkey -e
+
+# ZSH
+PS1='[34m%n@m11 [33m%~[0m
+%% '
+
+# Ubuntu
+
+# if the command-not-found package is installed, use it
+# if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found ]; then
+# 	function command_not_found_handler {
+# 	        # check because c-n-f could've been removed in the meantime
+#                 if [ -x /usr/lib/command-not-found ]; then
+#                     { /usr/bin/python /usr/lib/command-not-found -- $1 
+#                     } 2>&1 | fmt -100
+#                    return 0
+#                 elif [ -x /usr/share/command-not-found ]; then
+# 		   /usr/bin/python /usr/share/command-not-found -- $1
+#                    return 0
+# 		else
+# 		   return 127
+# 		fi
+# 	}
+# fi
+
+# ZLE
+if [[ $TERM = xterm ]] ; then
+  . $HOME/etc/shell/keys/gnome-terminal-keys
+
+  # just works
+  # bindkey "${key[Left]}" backward-char
+  # bindkey "${key[Right]}" forward-char
+  # bindkey "${key[Up]}" up-history
+  # bindkey "${key[Down]}" down-history
+  # bindkey "^[${key[Backspace]}" backward-kill-line
+
+  bindkey "${key[Home]}" beginning-of-line
+  bindkey "${key[End]}" end-of-line
+  bindkey "${key[PageUp]}" history-beginning-search-backward
+  bindkey "${key[PageDown]}" history-beginning-search-forward
+
+  bindkey "${key[C-Left]}" backward-word
+  bindkey "${key[C-Right]}" forward-word
+
+  # by default delete-char-or-list - if in the end of line show completitions
+  bindkey "^D" delete-char
+  bindkey -s "${key[Delete]}" "^D"
+  bindkey -s "${key[C-Delete]}" kill-word
+  bindkey "${key[Insert]}" yank
+
+  bindkey -s "${key[F1]}" "^[h"
+  bindkey -s "${key[F5]}" "^A(^E >/dev/null 2>&1 &)^M"
+fi
+
+# useful for mv, cp 
+bindkey "\e=" copy-prev-shell-word
+
+# better then default (very useful - like ^Z for vim)
+bindkey "\eq" push-line-or-edit
+
+# for experiments
+WORDCHARS=${WORDCHARS//[&=\/;!#%\{.-]}
+precmd () {print -Pn "\e]0;%3~\a"}
+

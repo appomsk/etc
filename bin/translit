@@ -1,0 +1,111 @@
+#!/bin/sh
+
+usage() {
+    cat <<END
+Usage: $(basename $0) [-h|--help] [-r]
+Transliterate standart input to standart output.
+
+By default from cyrillic characters to latin. 
+
+  -r, --reverse      from latin to cyrillic
+  -h, --help         this help
+END
+    exit $1
+}
+
+# обсуждение https://habrahabr.ru/post/265455/
+
+# неспорно
+# абвгдезиклмнопрстуф
+# abvgdeziklmnoprstuf
+# 
+# малоспорно
+# ж zh
+# й y
+# ч ch
+# ш sh
+# э eh
+# ю ju
+# я ja
+
+# сильноспорно 
+# ё je
+# ы ih
+
+# разумеется, это тоже сильноспорно
+# заменены (x, q - не используются, tc вместо c - не вызывает путаницу,
+# щ - чтоб 2 символа (выбраны почти от фонаря), jj - "мягче", чем "jh")
+# 
+# х x
+# ц tc
+# щ zj
+# ъ q
+# ь jj
+
+cyr2lat() {
+sed 'y/абвгдезиклмнопрстуфйхъАБВГДЕЗИКЛМНОПРСТУФЙХЪ/abvgdeziklmnoprstufyxqABVGDEZIKLMNOPRSTUFYXQ/
+s/ж/zh/g
+s/ч/ch/g
+s/ш/sh/g
+s/э/eh/g
+s/ю/ju/g
+s/я/ja/g
+s/ё/je/g
+s/ы/ih/g
+s/ц/tc/g
+s/щ/zj/g
+s/ь/jj/g
+s/Ж/ZH/g
+s/Ч/CH/g
+s/Ш/SH/g
+s/Э/EH/g
+s/Ю/JU/g
+s/Я/JA/g
+s/Ё/JE/g
+s/Ы/IH/g
+s/Ц/TC/g
+s/Щ/ZJ/g
+s/Ь/JJ/g
+'
+}
+
+# TODO check after converting about remaining latin chars?
+lat2cyr() {
+sed 'y/abvgdeziklmnoprstufyxqABVGDEZIKLMNOPRSTUFYXQ/абвгдезиклмнопрстуфйхъАБВГДЕЗИКЛМНОПРСТУФЙХЪ/
+s/zh/ж/g
+s/ch/ч/g
+s/sh/ш/g
+s/eh/э/g
+s/ju/ю/g
+s/ja/я/g
+s/je/ё/g
+s/ih/ы/g
+s/tc/ц/g
+s/zj/щ/g
+s/jj/ь/g
+s/ZH/Ж/g
+s/CH/Ч/g
+s/SH/Ш/g
+s/EH/Э/g
+s/JU/Ю/g
+s/JA/Я/g
+s/JE/Ё/g
+s/IH/Ы/g
+s/TC/Ц/g
+s/ZJ/Щ/g
+s/JJ/Ь/g
+'
+}
+
+if [ "$1" = -h ] || [ "$1" = --help ];then
+    usage 0
+fi
+
+if [ $# -eq 0 ]; then
+    cyr2lat
+elif ([ "$1" = -r ] || [ "$1" = --reverse ]) && [ $# -eq 1 ];then
+    lat2cyr
+else
+    usage 1
+fi
+

@@ -1,0 +1,40 @@
+#!/usr/bin/python
+# vim ts=2
+
+import subprocess
+import sys
+
+if sys.argv[1]:
+    try:
+        subprocess.check_call(['sudo', 'mount', '-t', 'iso9660', '-o', 'loop', sys.argv[1], '/mnt/cdrom'])
+    except subprocess.CalledProcessError:
+        try:
+            print 'Error occurred mounting as ISO9660. Trying UDF...'
+            subprocess.check_call(['sudo', 'mount', '-t', 'udf', '-o', 'loop', sys.argv[1], '/mnt/cdrom'])
+        except subprocess.CalledProcessError:
+            try:
+                print 'Error occurred mounting as UDF. Trying HFS+...'
+                subprocess.check_call(['sudo', 'mount', '-t', 'hfsplus', '-o', 'loop', sys.argv[1], '/mnt/cdrom'])
+            except subprocess.CalledProcessError:
+                try:
+                    print 'Error occured mounting as HFS+. Trying HFS...'
+                    subprocess.check_call(['sudo', 'mount', '-t', 'hfs', '-o', 'loop', sys.argv[1], '/mnt/cdrom'])
+                except subprocess.CalledProcessError:
+                    print 'Unable to mount ISO. Check conditions.'
+                    sys.exit(1)
+    else:
+        raw_input('Press RETN to umount the ISO.')
+
+    try:
+        subprocess.check_call(['sudo', 'umount', '/mnt/cdrom'])
+    except CalledProcessError:
+        print 'Error unmounting normally. Forcing umount...'
+        try:
+            subprocess.check_call(['sudo', 'umount', '-l', '/mnt/cdrom'])
+        except subprocess.CalledProcessError:
+            print 'Unable to unmount ISO. Check conditions.'
+            sys.exit(1)
+else:
+    print 'Usage: '+sys.argv[0]+' ISOFILE'
+    print 'This will try to mount as ISO9660, UDF, HFS+, and HFS in that order.'
+

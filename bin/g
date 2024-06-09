@@ -1,0 +1,20 @@
+#!/bin/sh
+
+: ${1:?"Need an argument"}
+
+OPTIONS="-P -ri --color=always "
+for o ; do
+  case $o in
+   -*) OPTIONS="$OPTIONS $o"
+       shift ;;
+  esac
+done
+
+pattern="$1"
+shift
+
+if [ $# -ne 0 ]; then
+    grep $OPTIONS "$pattern" "$@"
+else
+    grep $OPTIONS "$pattern" *
+fi | less -FRxei

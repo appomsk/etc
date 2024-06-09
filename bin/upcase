@@ -1,0 +1,6 @@
+#!/bin/sh
+
+#tr [a-z]абвгдеёжзийклмнопрстуфхцчшщъыьэюя [A-Z]АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ
+# tr doesn't work, [:upper:], etc. do not work.
+
+sed y/abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя/ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ/
