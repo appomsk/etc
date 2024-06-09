@@ -15,10 +15,17 @@ PROFILED="$VAR/profile.d"
 [ -e "$PROFILED" ] || {
     echo "$PROFILED does not exist" >&2; exit 1; }
 
+# system ruby
 mkdir -p $LIB/ruby
-cat <<'END' >$PROFILED/$APP-dirs
+cat <<'END' >$PROFILED/ruby-dirs
+# system ruby
 GEM_HOME="$LIB/ruby"
 export GEM_HOME
 
 prepend_path "$GEM_HOME/bin"
+
+# chruby
+_t=/usr/local/share/chruby/chruby.sh
+[ -e $_t ] && . $_t
+unset _t
 END

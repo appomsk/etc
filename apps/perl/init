@@ -17,7 +17,7 @@ PROFILED="$VAR/profile.d"
 
 
 mkdir -p $LIB/perl
-cat <<'END' >$PROFILED/$APP-dirs
+cat <<'END' >$PROFILED/perl-dirs
 export PERL_BASE=$LIB/perl
 
 prepend_path "$PERL_BASE/bin"
