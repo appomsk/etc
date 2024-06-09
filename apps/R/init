@@ -1,0 +1,27 @@
+# vim: ft=sh
+
+[ "$HOME" ] && [ "$ETC" ] && [ "$LIB" ] && [ "$VAR" ] || { 
+    echo "
+Error: configuration variables are not set: 
+\$HOME: $HOME
+\$ETC:  $ETC
+\$LIB:  $LIB
+\$VAR:  $VAR
+" >&2
+exit 1
+}
+
+cat <<EOF >$HOME/.Rprofile
+# the dir must be created
+.libPaths("$LIB/R/Rlib")
+
+options(reticulate.repl.quiet = TRUE)
+
+## Default repo
+local({r <- getOption("repos")
+       r["CRAN"] <- "https://cran.r-project.org" 
+       options(repos=r)
+})
+EOF
+
+mkdir -p "$HOME/$LIB/R/Rlib"

@@ -10,3 +10,7 @@ for d; do
     mkdir -p $d
 done
 set --
+
+for app in $ETC/apps/*; do
+    sh $app/init
+done

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-ETC="$HOME/usr/etc"
-LIB="$HOME/usr/lib"
-VAR="$HOME/var"
-
-. $1

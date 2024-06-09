@@ -1,0 +1,13 @@
+
+! [ "$LIB" ] && { echo '$LIB is not set' >&2; exit 1; } 
+
+# the dir must exist
+.libPaths("~/$LIB/R/Rlib")
+
+options(reticulate.repl.quiet = TRUE)
+
+## Default repo
+local({r <- getOption("repos")
+       r["CRAN"] <- "https://cran.r-project.org" 
+       options(repos=r)
+})
