@@ -1,16 +1,32 @@
 #!/bin/sh
 
-. ../profile
+# get ETC, VAR, LIB
+. $(dirname $0)/../profile
+
+# make dirs
+vardirs="profile.d tmp opt xdg" 
 
 cd $HOME
 ln -fs $ETC/profile .profile
 
-set -- $LIB $VAR/profile.d
-for d; do
+mkdir -p $VAR $LIB
+
+cd $VAR
+for d in $vardirs; do
     mkdir -p $d
 done
-set --
 
+# bin
+mkdir -p $HOME/.local/bin $HOME/bin
+cd $HOME/bin
+for f in $ETC/bin/*; do
+    ln -sf "$f"
+done
+
+# xdg
+$ETC/util/fix-xdg
+
+# init
 for app in $ETC/apps/*; do
-    sh $app/init
+    [ -f "$app/init" ] && sh "$app/init"
 done

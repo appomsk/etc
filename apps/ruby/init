@@ -24,8 +24,8 @@ export GEM_HOME
 
 prepend_path "$GEM_HOME/bin"
 
-# chruby
-_t=/usr/local/share/chruby/chruby.sh
-[ -e $_t ] && . $_t
-unset _t
+# chruby (not works - for bash)
+# _t=/usr/local/share/chruby/chruby.sh
+# [ -e $_t ] && . $_t
+# unset _t
 END
