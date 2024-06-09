@@ -1,0 +1,4 @@
+[filemanager]
+ChangePanel = Left; Right
+[input]
+Complete = tab

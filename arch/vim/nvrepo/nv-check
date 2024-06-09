@@ -1,0 +1,10 @@
+#!/bin/sh
+
+conf=~/.config/nvim
+share=~/.local/share/nvim
+state=~/.local/state/nvim
+cache=~/.cache/nvim
+
+for f in "$conf" "$share" "$state" "$cache"; do
+    ls -ld "$f"
+done

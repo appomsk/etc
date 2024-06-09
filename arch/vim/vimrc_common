@@ -1,0 +1,272 @@
+OLD!
+
+set nocompatible
+filetype indent plugin on
+syntax on
+
+"------------------------------------------------------------
+" Must have options {{{1
+"
+" These are highly recommended options.
+
+" One of the most important options to activate. Allows you to switch from an
+" unsaved buffer without saving it first. Also allows you to keep an undo
+" history for multiple files. Vim will complain if you try to quit without
+" saving, and swap files will keep you safe if your computer crashes.
+set hidden
+
+" Better command-line completion
+set wildmenu
+" APP: even better
+set wildmode=list,full
+
+" Show partial commands in the last line of the screen
+set showcmd
+
+" Highlight searches 
+set hlsearch
+noremap <F9> :set hlsearch! hlsearch?<CR>
+
+" Modelines have historically been a source of security vulnerabilities.  As
+" such, it may be a good idea to disable them and use the securemodelines
+" script, <http://www.vim.org/scripts/script.php?script_id=1876>.
+" set nomodeline
+
+
+"------------------------------------------------------------
+" Usability options {{{1
+"
+" These are options that users frequently set in their .vimrc. Some of them
+" change Vim's behaviour in ways which deviate from the true Vi way, but
+" which are considered to add usability. Which, if any, of these options to
+" use is very much a personal preference, but they are harmless.
+
+" Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
+
+" APP: 
+" While typing a search command, show where the pattern, as it was typed
+" so far, matches.  The matched string is highlighted.  If the pattern
+" is invalid or not found, nothing is shown.  
+set incsearch
+
+" Allow backspacing over autoindent, line breaks and start of insert action
+set backspace=indent,eol,start
+
+" When opening a new line and no filetype-specific indenting is enabled, keep
+" the same indent as the line you're currently on. Useful for READMEs, etc.
+set autoindent
+
+" Stop certain movements from always going to the first character of a line.
+" While this behaviour deviates from that of Vi, it does what most users
+" coming from other editors would expect.
+set nostartofline
+
+" Display the cursor position on the last line of the screen or in the status
+" line of a window
+set ruler
+
+" Always display the status line, even if only one window is displayed
+set laststatus=2
+
+" Instead of failing a command because of unsaved changes, instead raise a
+" dialogue asking if you wish to save changed files.
+set confirm
+
+" Use visual bell instead of beeping when doing something wrong
+set visualbell
+
+" And reset the terminal code for the visual bell.  If visualbell is set, and
+" this line is also included, vim will neither flash nor beep.  If visualbell
+" is unset, this does nothing.
+" APP: I want visual bell
+" set t_vb=
+
+" Enable use of the mouse for all modes
+" APP: for tags too
+set mouse=a
+
+" Set the command window height to 2 lines, to avoid many cases of having to
+" 'press <Enter> to continue'
+" APP: no need
+" set cmdheight=2
+
+" Display line numbers on the left
+" APP: No need for text files and takes up space
+" set number
+
+" Quickly time out on keycodes, but never time out on mappings
+set notimeout ttimeout ttimeoutlen=200
+
+"------------------------------------------------------------
+" Indentation options {{{1
+"
+" Indentation settings according to personal preference.
+
+" Indentation settings for using 2 spaces instead of tabs.
+" Do not change 'tabstop' from its default value of 8 with this setup.
+" APP: changed to 4 (for html ruby in plugin)
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+"------------------------------------------------------------
+" Mappings {{{1
+"
+" Useful mappings
+
+" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
+" which is the default
+map Y y$
+
+" Map <C-L> (redraw screen) to also turn off search highlighting until the
+" next search
+nnoremap <C-L> :nohl<CR><C-L>
+
+"========================APP===================================
+
+" -------------------- ADMINISTRATIVE -----------------------
+
+set history=100		" keep 100 lines of command line history
+
+set autowrite		" no dull questions
+
+" if default - any length saves "-remove nohighlighting, only remember
+" the last 10 files, contents of registres (up to 1000 lines) will be
+" remembered, the last 10 search commands, filemarks stored (remember '0),
+" path for viminfo. No global variables, restore the buffer list, no 
+" specific number of the command-line history (see option history - 100)
+set viminfo=h,'10,<1000,/10,f1,n$HOME/var/viminfo
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+" -------------------- EDITING TEXT --------------------------
+
+" in C and other files it doesn't work automatically, but not vise versa 
+set textwidth=78 
+
+set whichwrap=h,l,<,>,~,[,]
+
+nmap Q gqap
+
+map <C-CR> i<CR><ESC>
+
+" -------------------- READ -------------------------------
+
+" common in browsers
+map <Space> <C-F>
+map <BS> <C-B>
+map <C-Up> <C-Y>
+map <C-Down> <C-E>
+map <M-Down> <C-]>
+map <M-Left> <C-o>
+map <M-Right> <C-i>
+
+" ------------------ EMACS MOTIONS ------------------------
+
+" TODO: look and describe what i lost
+inoremap <C-A> <HOME>
+inoremap <C-E> <END>
+inoremap <C-F> <RIGHT>
+inoremap <C-B> <LEFT>
+inoremap <C-D> <DEL>
+inoremap <M-Backspace> <C-W>
+
+" not in gnome terminal with utf8
+" inoremap <M-b> <S-LEFT>
+" inoremap <M-f> <S-RIGHT>
+" C-p is very handy don't use
+" inoremap <M-P> <UP>
+" inoremap <M-N> <DOWN>
+
+" for ex command line
+cnoremap <C-A> <HOME>
+cnoremap <C-E> <END>
+cnoremap <C-F> <RIGHT>
+cnoremap <C-B> <LEFT>
+cnoremap <C-D> <DEL>
+cnoremap <M-Backspace> <C-W>
+cnoremap <C-P> <UP>
+cnoremap <C-N> <DOWN>
+
+" TODO only for gvim - i need check
+cnoremap <M-b> <S-LEFT>
+cnoremap <M-f> <S-RIGHT>
+" ---------------------- APP: just mine ------------------
+" just link to ~/.vim ???
+"
+" runtimepath different in windows and unix, so mine:
+" set runtimepath=~/my/etc/vim/runtime,$VIMRUNTIME,~/.vim
+
+" ----------------- RUSSIFICATION  ------------------------
+
+lang C
+set encoding=utf-8
+set fileencoding=utf-8
+au BufEnter * source $HOME/my/etc/vim/russian-utf8.vim " without ë
+
+" insert mode and search in original language (english) at the beginning
+set iminsert=0
+set imsearch=0
+
+" APP: as in emacs and C-^ always changed to alternative file
+" alternative keyboard
+inoremap <C-\> <C-^>
+" the same as in the normal mode
+inoremap <C-^> <Esc><C-^>
+
+" ----------------------- habits ----------------------------------
+
+imap <C-S> <ESC>:w<CR>a
+
+" no need - wait for something useful
+map S <Nop>
+
+" -------------------- HANDY ---------------------------------------
+
+" Make p in Visual mode replace the selected text with the "" register.
+vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+
+" only for gvim
+map <C-Tab> :tabnext<CR>
+imap <C-Tab> <ESC><C-Tab>
+
+"" ==================== MOVE TO PLUGINS ==============================
+"
+"" rst
+"imap `` ``
+"imap `$ $
+"
+"" python
+"map <F5> :w<CR>:! python %<CR><CR>
+"imap <F5> <ESC><F5>
+"
+" set showmatch
+"" ===================================================================
+
+au FileType ruby setl sw=2 sts=2
+au FileType html setl sw=2 sts=2
+
+" system clipboard
+set clipboard+=unnamed
+
+" git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+"set rtp+=~/.vim/bundle/vundle/
+"call vundle#rc()
+"" Brief help
+" " :BundleList          - list configured bundles
+" " :BundleInstall(!)    - install(update) bundles
+" " :BundleSearch(!) foo - search(or refresh cache first) for foo
+" " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" "
+" " see :h vundle for more details or wiki for FAQ
+
+" skip startup message
+set shortmess+=I

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+conf=~/.config/nvim
+share=~/.local/share/nvim
+state=~/.local/state/nvim
+cache=~/.cache/nvim
+
+die() {
+    echo "$1" >&1 && exit 1
+}
+
+t=
+for f in "$conf" "$share" "$state" "$cache"; do
+    if [ -e "$f" ]; then
+        ! [ -L "$f" ] && t=1 && ls -d "$f"
+    fi
+done
+
+[ "$t" ] && die "Some directories are not links"
+
+for f in "$conf" "$share" "$state" "$cache"; do
+    rm "$f" >/dev/null
+    mkdir -p "$f"
+done
+

@@ -1,0 +1,487 @@
+" vim: fdm=marker
+
+" BACKUP COPY
+
+" Plugins 
+" =============
+
+" {{{ Open
+
+" let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+let data_dir = '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute 
+\ '!curl -fLo ' . data_dir . 
+\ '/autoload/plug.vim --create-dirs 
+\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" the explicit dirname for neovim
+call plug#begin('~/.vim/plugged')
+
+" }}}
+" {{{ Options
+
+Plug 'https://github.com/tpope/vim-sensible'
+
+"}}}
+" {{{ UI
+
+" Colors
+Plug 'sainnhe/gruvbox-material'
+
+" lightline
+Plug 'https://github.com/itchyny/lightline.vim'
+
+" }}}
+" Ru {{{
+
+" linux keyboard layouts switching
+Plug 'https://github.com/lyokha/vim-xkbswitch'
+
+" }}}
+" Keys {{{
+" emacs keybindings
+Plug 'tpope/vim-rsi'
+
+" }}}
+" {{{ git
+
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" }}}
+" {{{ FZF
+
+" you need to set up both "fzf" and "fzf.vim"
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+" }}}
+" {{{ file exploring
+
+Plug 'tpope/vim-vinegar'
+
+" }}}
+" Close {{{
+"" Tmux
+"Plug 'benmills/vimux'
+"Plug 'tmux-plugins/vim-tmux'
+"
+"" Editor utils
+"" TODO Check for removing
+"Plug 'godlygeek/tabular'
+"Plug 'dhruvasagar/vim-table-mode'
+"Plug 'tpope/vim-commentary'
+"Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-speeddating'
+"Plug 'tpope/vim-repeat'
+"
+"Plug 'Raimondi/delimitMate'
+"
+"" Find a char, across lines
+"Plug 'dahu/vim-fanfingtastic'
+
+call plug#end()
+
+" }}}
+
+" Configuration
+" ==============
+
+" {{{ UI
+
+" with dark-pastel in konsole
+colorscheme gruvbox-material
+
+" LightLine
+let g:LL#color = "apprentice"
+let g:guiLL#color = g:LL#color
+
+" With nerdfonts
+let g:lightline = {
+    \ 'colorscheme' : g:LL#color,
+    \ 'component': {
+    \   'lineinfo': '%3l:%-2v',
+    \  },
+    \ 'separator':    { 'left': "\ue0b0", 'right': "\ue0b2" },
+    \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+\ }
+
+"" Without nerdfonts
+"let g:lightline = {
+"    \ 'colorscheme' : g:LL#color,
+"    \ 'component': {
+"    \   'lineinfo': '%3l:%-2v',
+"    \  },
+"\ }
+
+" }}}
+" {{{ Emacs keybindings
+
+" emacs keybindings - tpope/vim-rsi
+if has("gui_running") || has('nvim')
+    inoremap <M-k> <C-k>
+else
+    " terminal voodoo like in plugin: You can use F13-F36 with Shift
+    " You can't use F keys here with M,C modifiers, also it's possible to map them
+    " -- or just inoremap  ^[k --
+    " silent! exe "set <S-F13>=\<Esc>k"
+    " inoremap <S-F13> <C-k>
+    inoremap k <C-k>
+endif
+
+inoremap <C-k> <C-o>D
+" TODO cnoremap - write a function
+
+" }}}
+" {{{ xkb-switch
+
+" To compile:
+" git clone https://github.com/grwlf/xkb-switch
+
+" Manjaro
+if !empty(glob("/usr/lib/libxkbswitch.so"))
+    let g:XkbSwitchLib = '/usr/lib/libxkbswitch.so'
+    let g:XkbSwitchEnabled = 1 
+endif
+" OpenSUSE
+if !empty(glob("/usr/lib64/libxkbswitch.so.1"))
+    let g:XkbSwitchLib = '/usr/lib64/libxkbswitch.so.1'
+    let g:XkbSwitchEnabled = 1 
+endif
+if !empty(glob("/usr/local/lib/libxkbswitch.so"))
+    let g:XkbSwitchLib = '/usr/local/lib/libxkbswitch.so'
+    let g:XkbSwitchEnabled = 1 
+endif
+"let g:XkbSwitchIMappings = ['ru'] 
+
+" }}}
+" {{{ Options
+
+" TODO check with tpope/vim-sensible
+" Taken from mikeslattery/nvim-defaults.vim
+if !has('nvim')
+    set nocompatible
+    
+    " Do not understand this - why autocmd?
+    if has('autocmd')
+      filetype plugin indent on
+    endif
+    
+    set backspace=indent,eol,start
+    set encoding=utf-8
+    set fileencodings=utf-8,cp1251,latin1
+    set incsearch
+    set nolangremap
+    let &nrformats="bin,hex"
+    set showcmd
+    set ruler
+    set wildmenu
+    set wildmode=longest:full,full
+    set autoindent
+    set autoread
+    set background=dark
+    set belloff=all
+    set cdpath=,.,~/src,~/
+    set clipboard=unnamed,unnamedplus
+    set cmdheight=1
+    set complete=.,w,b,u,t
+    set cscopeverbose
+    set diffopt=internal,filler
+    set display=lastline
+    " TODO: 'fillchars' defaults (in effect) to "vert:│,fold:·,sep:│"
+    set fillchars=
+    set formatoptions=tcqj
+    let &keywordprg=":Man"
+    set nofsync
+    set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+    set hidden
+    set history=10000
+    set hlsearch
+    set nojoinspaces
+    set laststatus=2
+    set listchars=tab:>\ ,trail:-,nbsp:+
+    set maxcombine=6
+    set mouse=a
+    set scroll=13
+    set scrolloff=0
+    set sessionoptions-=options
+    set shortmess=filnxtToOF
+    set sidescroll=1
+    set smarttab
+    set nostartofline
+    set tabpagemax=50
+    set tags=./tags;,tags
+    set notitle
+    set switchbuf=uselast
+    set titleold=
+    set ttimeout
+    set ttimeoutlen=50
+    set ttyfast
+    "TODO: set viewoptions+=unix,slash
+    set viewoptions-=options
+    let &viminfo='!,'.&viminfo
+    let &wildoptions="pum,tagfile,fuzzy"
+    
+    let g:vimsyn_embed='l'
+    
+    if exists('$TMUX') && !has('nvim')
+      set ttymouse=xterm2
+    
+      " https://vimhelp.org/term.txt.html#xterm-true-color
+      " https://gist.github.com/andersevenrud/015e61af2fd264371032763d4ed965b6
+      " if tmux and not(gVim) and termguicolors
+      autocmd VimEnter * if !has('gui_running') && has('termguicolors') && &termguicolors
+          \| let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+          \| let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+        \| endif
+    endif
+    
+    runtime ftplugin/man.vim
+
+endif
+
+" my
+
+" skip startup message
+set shortmess+=I
+
+" TODO Maybe - autowriteall, undofile, undolevels, undoreload, nohidden
+set autowrite		" no dull questions
+
+" raise a dialogue asking if you wish to save changed files.
+set confirm
+
+" try this
+set termguicolors
+
+set textwidth=72
+set whichwrap=h,l,<,>,~,[,]
+
+" Search
+set ignorecase
+set smartcase
+
+" TODO with plugin: completion in insert mode 
+set completeopt=menu,menuone,noselect
+
+" For all files
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set shiftround
+
+" TODO to check 
+" if default - any length saves "-remove nohighlighting, only remember
+" the last 10 files, contents of registres (up to 1000 lines) will be
+" remembered, the last 10 search commands, filemarks stored (remember '0),
+" path for viminfo. No global variables, restore the buffer list, no 
+" specific number of the command-line history (see option history - 100)
+set viminfo=h,'10,<1000,/10,f1,n
+
+" .swp files to this dir
+set directory=$HOME/tmp
+
+" }}}
+" {{{ Mappings
+
+" For cursor in terminal and xgb-switch
+inoremap <C-c> <Esc>
+cnoremap <C-c> <Esc>
+
+" TODO
+if has('nvim') 
+    let mapleader=" "
+    inoremap <M-c> <Esc>
+    cnoremap <M-c> <Esc>
+    noremap  <M-c> <Esc>
+    " Quick formatting
+    nnoremap <M-q> gqap
+else
+    let mapleader=" "
+    inoremap c <Esc>
+    cnoremap c <Esc>
+    noremap  c <Esc>
+    nnoremap q gqap
+endif
+" let g:maplocalleader = 
+
+if !has('nvim')
+    " From Neovim
+    nnoremap Y y$
+    nnoremap <C-L> <Cmd>nohlsearch<Bar>diffupdate<CR><C-L>
+    inoremap <C-U> <C-G>u<C-U>
+    inoremap <C-W> <C-G>u<C-W>
+    noremap Q :execute 'normal! @'.g:qreg<cr>
+endif
+
+" the same as in the normal mode
+inoremap <C-^> <Esc><C-^>
+
+" CR in console 
+noremap <CR> i<CR><ESC>
+
+" common in browsers
+noremap <leader><Space> <C-f>
+" noremap <Space> <C-F>
+noremap <BS> <C-B>
+
+" examples
+" inoremap <F2> <ESC>:w<CR>
+" noremap  <F2> :w<CR>
+" noremap  <F5> :!./%<CR>
+" inoremap <F5> <ESC><F5>
+" inoremap <silent> <F4> <ESC>:set colorcolumn=80 number cursorline<CR>i
+
+" TODO Check powerman/vim-plugin-viewdoc
+noremap <C-Up> <C-Y>
+noremap <C-Down> <C-E>
+noremap <M-Down> <C-]>
+noremap <M-Left> <C-o>
+noremap <M-Right> <C-i>
+
+" Make p in Visual mode replace the selected text with the "" register.
+vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+
+" TODO which-keys
+nnoremap <silent> <leader>ve :edit $MYVIMRC<cr>
+nnoremap <silent> <leader>vs :w<cr>:source $MYVIMRC<cr>
+
+" }}}
+" {{{ Russification and spell
+
+" russian "C"
+inoremap <C-с> <ESC>
+inoremap <M-с> <ESC>
+
+" For vim layouts
+" source ~/etc/conf/misc/vim/russian-utf8.vim
+
+" As in emacs and C-^ always changed to alternative file
+" alternative keyboard
+inoremap <C-\> <C-^>
+
+" insert mode and search in original language (english) at the beginning
+set iminsert=0
+set imsearch=0
+
+" It's simpler
+imap № #
+imap ё `
+imap Ё ~
+
+" SPELL
+" Словари для русского языка.
+" mkdir -p ~/.vim/spell && 
+" cd ~/.vim/spell && 
+" wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.sug &&
+" wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.spl
+
+"включить проверку орфографии
+set spelllang=ru,en_us
+set nospell
+inoremap <F9> <ESC>:setlocal spell!<CR>
+noremap <F9> :setlocal spell!<CR>
+
+" ???
+nnoremap <C-_> :<C-U>setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+vnoremap <C-_> <Esc>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>gv
+inoremap <C-_> <C-O>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+cnoremap <C-_> <C-C>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+onoremap <C-_> <C-C>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+
+" for menu, etc.
+lang en_US.utf8
+
+" }}}
+" {{{ Cursor for terminal
+
+Plug 'jszakmeister/vim-togglecursor' 
+" 
+" " for mintty
+" if has("win32unix") || ($WSL_DISTRO_NAME =~ '.') || ($TERM =~ 'rxvt')
+"     let g:togglecursor_force   = 'xterm'
+" endif
+" 
+" to start with block cursor from zsh
+" autocmd VimEnter * silent exec '!echo -ne "\e[2 q"<CR>'
+" au VimEnter * silent execute '!echo -ne "\e[2 q"' | redraw!
+" let g:togglecursor_default = 'block'
+" let g:togglecursor_insert  = 'line'
+" let g:togglecursor_leave   = 'block'
+" au VimEnter * silent execute '!echo -ne "\e[2 q"' | redraw!
+
+if has("autocmd")
+au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+au InsertEnter,InsertChange *
+\ if v:insertmode == 'i' | 
+\   silent execute '!echo -ne "\e[6 q"' | redraw! |
+\ elseif v:insertmode == 'r' |
+\   silent execute '!echo -ne "\e[4 q"' | redraw! |
+\ endif
+au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif
+" }}}
+" {{{ Misc
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\   exe "normal g`\"" |
+\ endif
+
+" }}}
+" GUI {{{
+
+" IT DOES NOT WORK WITH NEOVIM - ONLY SEPARATED GINIT.VIM
+if has('gui_running')
+    " =================== MENU FOR WINDOWS GVIM ====================
+    " in windows popup-menu (tooltips) are shown in cp1251, but in menu_ru.utf-8
+    " they are in utf. So just comment them in this file.
+    " source $VIMRUNTIME/delmenu.vim
+    " source $VIMRUNTIME/lang/menu_ru.utf-8.vim
+    " source $VIMRUNTIME/menu.vim
+
+    set guicursor=a:blinkwait0,a:
+    " set guifont=Consolas:h11:cRUSSIAN
+    " set guifont=Liberation\ Mono\ 10
+    " set guifont=UbuntuMono\ NF\ 15
+    set guifont=Consolas\ 12
+    " set guifont=Ubuntu\ Mono\ derivative\ PowerLine\ 11 
+
+    " tabs
+    set showtabline=1
+    map <C-Tab> :tabnext<CR>
+    imap <C-Tab> <ESC><C-Tab>
+
+    set guioptions-=T
+    set guioptions-=m
+    set guioptions-=r
+
+    inoremap <C-S-v> <C-o>"+gP
+
+    " visual copying copy to clipboard too (?)
+set guioptions+=a
+
+endif
+
+" }}}
+" {{{ File Type Setting
+
+let g:markdown_fenced_languages = ['python', 'matlab', 'ruby']
+
+augroup filetype_vim
+  autocmd!
+  autocmd filetype vim setlocal foldmethod=marker
+augroup end
+
+autocmd filetype sh set iskeyword+=$
+
+" for zshrc
+autocmd FileType zsh setlocal foldmethod=marker
+
+" }}}

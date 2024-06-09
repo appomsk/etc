@@ -1,0 +1,24 @@
+# vim: ft=sh
+
+[ "$HOME" ] && [ "$ETC" ] && [ "$LIB" ] && [ "$VAR" ] || { 
+    echo "
+Error: configuration variables are not set: 
+\$HOME: $HOME
+\$ETC:  $ETC
+\$LIB:  $LIB
+\$VAR:  $VAR
+" >&2
+exit 1
+}
+
+PROFILED="$VAR/profile.d"
+[ -e "$PROFILED" ] || {
+    echo "$PROFILED does not exist" >&2; exit 1; }
+
+app=$(realpath $(dirname $0))
+
+mkdir -p $HOME/.config/nvim
+ln -sf $app/init.vim $HOME/.config/nvim/init.vim
+
+mkdir -p $LIB/vim
+

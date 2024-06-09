@@ -1,0 +1,25 @@
+source $HOME/etc/vim/vimrc_common
+
+" =================== MENU FOR WINDOWS GVIM ====================
+" in windows popup-menu (tooltips) are shown in cp1251, but in menu_ru.utf-8
+" they are in utf. So just comment them in this file.
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/lang/menu_ru.utf-8.vim
+source $VIMRUNTIME/menu.vim
+
+winpos 0 0 
+set lines=44
+set columns=80
+let g:moria_style='delek'
+colorscheme delek 
+
+set guicursor=a:blinkwait0,a:
+set guifont=Consolas\ 12
+"set guifont=Liberation\ Mono\ 11
+
+set showtabline=2
+
+" kludge for Mint11
+map <F10> <Nop>
+map! <F10> <Nop>
+

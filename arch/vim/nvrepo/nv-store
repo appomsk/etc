@@ -1,0 +1,29 @@
+#!/bin/sh
+
+usage="Usage: $(basename $0) REPONAME"
+
+nvrepo="$HOME/var/nvrepo"
+
+conf=~/.config/nvim
+share=~/.local/share/nvim
+state=~/.local/state/nvim
+cache=~/.cache/nvim
+
+die() {
+    echo "$1" >&1 && exit 1
+}
+
+! [ -e "$nvrepo" ] && die "Error: $nvrepo does not exist"
+
+[ $# -ne 1 ] && die "$usage"
+
+repo="$nvrepo/$1"
+
+[ -e "$repo" ] && die "Repository $repo already exists"
+
+for f in "$conf" "$share" "$state" "$cache"; do
+    tgt=$(echo "$f" | sed -E 's!.*\W(\w*)/nvim$!\1!')
+    tgt="$repo/$tgt"
+    mkdir -p "$tgt"
+    mv -v "$f" "$tgt" 
+done

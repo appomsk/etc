@@ -1,0 +1,746 @@
+" vim: fdm=marker
+" WORKING
+
+" Оглавление
+
+" {{{ Введение
+
+let data_dir=has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+"let data_dir='~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" the explicit dirname for neovim
+call plug#begin('~/var/nvim-repo/mynvim/plugged')
+
+" }}}
+" {{{ Colors
+
+" Most popular colorschemes (in 2023?)
+Plug 'https://github.com/joshdick/onedark.vim'
+Plug 'https://github.com/sainnhe/everforest'
+Plug 'https://github.com/sainnhe/gruvbox-material'
+Plug 'https://github.com/nordtheme/vim'
+Plug 'https://github.com/ellisonleao/gruvbox.nvim'
+
+" }}}
+" {{{ Statusline
+
+Plug 'https://github.com/nvim-tree/nvim-web-devicons'
+Plug 'https://github.com/nvim-lualine/lualine.nvim'
+
+" }}}
+" {{{ Tabline, etc.
+
+Plug 'https://github.com/nanozuki/tabby.nvim'
+
+" Plug 'https://github.com/akinsho/bufferline.nvim'
+
+" }}}
+" {{{ Main keys
+
+" No plugins
+
+" }}}
+" {{{ Emacs keys
+
+Plug 'https://github.com/tpope/vim-rsi'
+
+" }}}
+" {{{ Mappings
+
+Plug 'https://github.com/folke/which-key.nvim'
+
+" }}}
+" {{{ Rus
+
+Plug 'https://github.com/lyokha/vim-xkbswitch'
+
+" }}}
+" {{{ Editor
+
+" Tabularize
+Plug 'https://github.com/godlygeek/tabular'
+" Detect tabstop and shiftwidth automatically
+Plug 'https://github.com/tpope/vim-sleuth'
+" Find a char, across lines
+Plug 'https://github.com/dahu/vim-fanfingtastic'
+
+" CHECK
+Plug 'https://github.com/dhruvasagar/vim-table-mode'
+Plug 'https://github.com/tpope/vim-commentary'
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/tpope/vim-speeddating'
+Plug 'https://github.com/tpope/vim-repeat'
+
+" }}}
+" {{{ Telescope
+
+Plug 'https://github.com/nvim-lua/plenary.nvim'
+Plug 'https://github.com/nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+" or                                , { 'tag': '0.1.5' }
+Plug 'https://github.com/nvim-telescope/telescope-symbols.nvim'
+Plug 'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
+    \ { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release' 
+    \ . ' && cmake --build build --config Release'
+    \ . ' && cmake --install build --prefix build' }
+
+Plug 'https://github.com/nvim-telescope/telescope-file-browser.nvim'
+
+" }}}
+" {{{ Misc
+
+" Tmux TODO
+
+" Mini TODO
+" Plug 'https://github.com/echasnovski/mini.nvim'
+
+" Explorer
+Plug 'https://github.com/nvim-lua/plenary.nvim'
+Plug 'https://github.com/MunifTanjim/nui.nvim'
+Plug 'https://github.com/nvim-neo-tree/neo-tree.nvim', { 'branch' : 'v2.x' }
+" Plug 'https://github.com/nvim-tree/nvim-web-devicons'
+" Plug 'https://github.com/ryanoasis/vim-devicons'
+
+" }}}
+" {{{ Devel
+
+Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Git
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'https://github.com/lewis6991/gitsigns.nvim'
+
+" Misc
+Plug 'https://github.com/numToStr/Comment.nvim'
+
+" }}}
+" {{{ LSP
+
+" Lua:
+"  {
+"    -- LSP Configuration & Plugins
+"    'neovim/nvim-lspconfig',
+"    dependencies = {
+"      -- Automatically install LSPs to stdpath for neovim
+"      { 'williamboman/mason.nvim', config = true },
+"      'williamboman/mason-lspconfig.nvim',
+"
+"      -- Useful status updates for LSP
+"      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+"      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+"
+"      -- Additional lua configuration, makes nvim stuff amazing!
+"      'folke/neodev.nvim',
+"    },
+Plug 'https://github.com/williamboman/mason.nvim'
+Plug 'https://github.com/williamboman/mason-lspconfig.nvim'
+Plug 'https://github.com/neovim/nvim-lspconfig'
+" Standalone UI for nvim-lsp progress.
+Plug 'https://github.com/j-hui/fidget.nvim', { 'tag': 'legacy' }
+
+" }}}
+" {{{ CMP
+
+Plug 'https://github.com/hrsh7th/cmp-nvim-lsp'
+Plug 'https://github.com/hrsh7th/cmp-buffer'
+Plug 'https://github.com/hrsh7th/cmp-path'
+Plug 'https://github.com/hrsh7th/cmp-cmdline'
+Plug 'https://github.com/hrsh7th/nvim-cmp'
+
+" }}}
+" {{{ Languages
+
+" Lua and vim development
+Plug 'https://github.com/folke/neodev.nvim'
+
+" }}}
+" {{{ Writer
+
+Plug 'https://github.com/preservim/vim-pencil'
+
+"}}}
+" {{{ Эпилог
+
+call plug#end()
+
+" }}}
+
+" Истории
+
+" {{{ Colors
+
+" colorscheme nord
+" au BufEnter * hi! Comment       term=bold ctermfg=8 guifg=#81A1C1
+" au BufEnter * hi! Keyword       term=bold ctermfg=8 guifg=#716EA0
+" au BufEnter * hi! Repeat        term=bold ctermfg=8 guifg=#716EA0
+" au BufEnter * hi! Conditional   term=bold ctermfg=8 guifg=#716EA0
+
+set background=dark
+colorscheme gruvbox-material
+
+" ???
+set termguicolors
+
+" }}}
+" {{{ Statusline
+
+lua << EOF
+local custom = require'lualine.themes.gruvbox'
+-- custom.command.a.bg = custom.normal.a.bg
+-- custom.visual.a.bg = custom.insert.a.bg
+-- custom.insert.a.bg = '#d8caac'
+require('lualine').setup {
+  options = {
+    theme = custom,
+    component_separators = '',
+    section_separators = { left = '', right = '' },
+  },
+  sections = {
+    lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
+    lualine_b = { 'filename', 'branch' },
+    lualine_c = {
+      '%=', --[[ add your center compoentnts here in place of this comment ]]
+    },
+    lualine_x = {},
+    lualine_y = { 'filetype', 'progress' },
+    lualine_z = {
+      { 'location', separator = { right = '' }, left_padding = 2 },
+    },
+  },
+  inactive_sections = {
+    lualine_a = { 'filename' },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = { 'location' },
+  },
+--  tabline = {},
+  extensions = {},
+}
+EOF
+
+" }}}
+" {{{ Tabline
+
+lua << EOF
+--- https://github.com/nanozuki/tabby.nvim/blob/main/lua/tabby/presets.lua
+
+local function bubble()
+  local util = require('tabby.util')
+
+  local hl_tabline_fill = util.extract_nvim_hl('lualine_c_normal')
+  local hl_tabline = util.extract_nvim_hl('lualine_b_normal')
+  local hl_tabline_sel = util.extract_nvim_hl('lualine_a_normal')
+
+  local function tab_label(tabid, active)
+    local icon = active and ' ' or ' '
+    local number = vim.api.nvim_tabpage_get_number(tabid)
+    local name = util.get_tab_name(tabid)
+    return string.format(' %s %d: %s ', icon, number, name)
+  end
+
+  local presets = {
+    hl = 'lualine_b_normal',
+    layout = 'tab_only',
+    head = {
+      { '  ', },
+      { ' '  , },
+    },
+    active_tab = {
+      label = function(tabid)
+      return {
+        tab_label(tabid, true),
+        hl = { fg = hl_tabline_sel.fg, bg = hl_tabline_sel.bg },
+      }
+      end,
+      left_sep = { '', hl = { fg = hl_tabline_sel.bg, bg = hl_tabline_fill.bg } },
+      right_sep = { '', hl = { fg = hl_tabline_sel.bg, bg = hl_tabline_fill.bg } },
+    },
+    inactive_tab = {
+      label = function(tabid)
+      return {
+        tab_label(tabid, false),
+        hl = { fg = hl_tabline.fg, bg = hl_tabline_fill.bg },
+      }
+      end,
+      left_sep = { ' ', hl = { fg = hl_tabline.bg, bg = hl_tabline_fill.bg } },
+      right_sep = { ' ', hl = { fg = hl_tabline.bg, bg = hl_tabline_fill.bg } },
+    },
+  }
+  return presets  
+end -- bubble
+
+require('tabby').setup({
+  tabline = bubble(),
+})
+EOF
+
+" }}}
+" {{{ Main keys
+
+let mapleader=" "
+" let g:maplocalleader=
+
+" Hm... Any minuses? 
+inoremap   <C-c>   <Esc>
+inoremap   <M-c>   <Esc>
+
+" Fix: russian "C"
+inoremap   <C-с>   <Esc>
+inoremap   <M-с>   <Esc>
+cnoremap   <C-с>   <C-c>
+noremap    <C-с>   <C-c>
+cnoremap   <M-с>   <C-c>
+noremap    <M-с>   <C-c>
+
+" }}}
+" {{{ Emacs keys
+
+" <M-k> for tmux navigation
+inoremap <M-K> <C-k>
+inoremap <C-k> <C-o>D
+
+" }}}
+" {{{ Mappings
+
+" which-key recomendations
+set timeout
+set timeoutlen=300
+
+lua <<EOF
+require("which-key").setup{
+    
+}
+EOF
+
+" Quick formatting
+nnoremap <M-q> gqap
+
+" the same as in the normal mode
+inoremap <C-^> <Esc><C-^>
+
+" CR in console 
+noremap <CR> i<CR><ESC>
+noremap <M-CR> i<CR>
+
+" common in browsers
+noremap <leader><Space> <C-f>
+noremap <M-BS> <C-f>
+noremap <BS> <C-b>
+
+" TODO Check powerman/vim-plugin-viewdoc
+noremap <C-Up> <C-Y>
+noremap <C-Down> <C-E>
+noremap <M-Down> <C-]>
+noremap <M-Left> <C-o>
+noremap <M-Right> <C-i>
+
+" much better for long wrapped lines
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+
+" Make p in Visual mode replace the selected text with the "" register.
+vnoremap p <Esc>:let current_reg=@"<CR>gvs<C-R>=current_reg<CR><Esc>
+
+" TODO which-keys
+nnoremap <silent> <leader>ve :edit $MYVIMRC<CR>
+nnoremap <silent> <leader>vs :w<CR>:source $MYVIMRC<CR>
+
+" Save file
+noremap <silent> <C-s> :w<CR><ESC>
+map! <C-s> <ESC><C-s>
+map  <F2> <C-s>
+map! <F2> <C-s>
+
+" examples
+noremap  <F5> :!./%<CR>
+map! <F5> <ESC><F5>
+inoremap <silent> <F4> <ESC>:set number! \| set cursorline! \|
+    \ execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>a
+
+" }}}
+" {{{ Rus
+
+set fileencodings=utf-8,cp1251,latin1
+
+" To compile:
+" git clone https://github.com/grwlf/xkb-switch
+
+let g:XkbSwitchEnabled = 1 
+" Manjaro
+if !empty(glob("/usr/lib/libxkbswitch.so"))
+    let g:XkbSwitchLib = '/usr/lib/libxkbswitch.so'
+endif
+" OpenSUSE
+if !empty(glob("/usr/lib64/libxkbswitch.so.1"))
+    let g:XkbSwitchLib = '/usr/lib64/libxkbswitch.so.1'
+endif
+if !empty(glob("/usr/local/lib/libxkbswitch.so"))
+    let g:XkbSwitchLib = '/usr/local/lib/libxkbswitch.so'
+endif
+
+" For vim layouts
+" source ~/etc/conf/misc/vim/russian-utf8.vim
+
+" As in emacs and C-^ always changed to alternative file
+" alternative keyboard
+inoremap <C-\> <C-^>
+
+" insert mode and search in original language (english) at the beginning
+set iminsert=0
+set imsearch=0
+
+" It's simpler
+imap № #
+imap ё `
+imap Ё ~
+
+" SPELL
+" Словари для русского языка.
+" mkdir -p ~/.vim/spell && 
+" cd ~/.vim/spell && 
+" wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.sug &&
+" wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.spl
+
+"включить проверку орфографии
+set spelllang=ru,en_us
+set nospell
+inoremap <F9> <ESC>:setlocal spell!<CR>
+noremap <F9> :setlocal spell!<CR>
+
+" ???
+nnoremap <C-_> :<C-U>setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+vnoremap <C-_> <Esc>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>gv
+inoremap <C-_> <C-O>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+cnoremap <C-_> <C-C>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+onoremap <C-_> <C-C>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+
+" for menu, etc.
+lang en_US.utf8
+
+" }}}
+" {{{ Editor
+
+" MY
+set cdpath=,.,~/
+set clipboard=unnamed,unnamedplus
+set formatoptions=tcqj
+let &keywordprg=":Man"
+
+" skip startup message
+set shortmess+=I
+
+" TODO Maybe - autowriteall, undofile, undolevels, undoreload, nohidden
+set autowrite		" no dull questions
+
+" raise a dialogue asking if you wish to save changed files.
+set confirm
+
+set textwidth=72
+set whichwrap=h,l,<,>,~,[,]
+
+" Search
+set ignorecase
+set smartcase
+
+" TODO with plugin: completion in insert mode 
+set completeopt=menu,menuone,noselect
+
+" For all files -- it doesn't work sometimes because of sleuth plugin 
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set shiftround
+
+" TODO to check 
+" if default - any length saves "-remove nohighlighting, only remember
+" the last 10 files, contents of registres (up to 1000 lines) will be
+" remembered, the last 10 search commands, filemarks stored (remember '0),
+" path for viminfo. No global variables, restore the buffer list, no 
+" specific number of the command-line history (see option history - 100)
+set viminfo=h,'10,<1000,/10,f1,n
+
+" .swp files to this dir
+set directory=$HOME/tmp
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\   exe "normal g`\"" |
+\ endif
+
+" }}}
+" {{{ Misc
+
+" {{{ Explorer
+lua require("neo-tree").setup {}
+
+let g:neo_tree_remove_legacy_commands = 1
+
+" Это из конфигурационного примера neo-tree, зачем?
+sign define DiagnosticSignError text=  texthl=DiagnosticSignError
+sign define DiagnosticSignWarn  text=  texthl=DiagnosticSignWarn
+sign define DiagnosticSignInfo  text=  texthl=DiagnosticSignInfo
+sign define DiagnosticSignHint  text=  texthl=DiagnosticSignHint
+
+" Mappings
+noremap  <silent> <leader>fe :Neotree float focus<CR>
+noremap  <silent> <leader>e  :Neotree float focus<CR>
+noremap  <silent> <leader>ne :enew<CR>
+
+" 2}}}
+
+" }}}
+" {{{ Writer
+
+let g:pencil#wrapModeDefault = 'hard'
+augroup pencil
+  autocmd!
+  autocmd FileType markdown call pencil#init({'wrap': 'soft', 'autoformat':0})
+  autocmd FileType text call pencil#init()
+augroup END
+
+" }}}
+" {{{ Devel
+
+" Treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "vim", "lua", "bash", "markdown", },
+
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
+}
+EOF
+
+" Comment
+lua require('Comment').setup()
+
+" }}}
+" {{{ Telescope
+
+lua <<EOF
+require 'telescope'.setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    },
+    file_browser = {
+
+    },
+  }
+}
+
+require('telescope').load_extension('fzf')
+require("telescope").load_extension "file_browser"
+
+local builtin = require('telescope.builtin')
+
+vim.keymap.set('n', '<leader>ff', builtin.find_files,            {} )
+vim.keymap.set('n', '<leader>fw', builtin.live_grep,             {} )
+vim.keymap.set('n', '<leader>fb', builtin.buffers,               {} )
+vim.keymap.set('n', '<leader>fh', builtin.help_tags,             {} )
+vim.keymap.set('n', '<leader>gb', builtin.git_branches,          {} )
+vim.keymap.set('n', '<leader>gc', builtin.git_commits,           {} )
+vim.keymap.set('n', '<leader>gs', builtin.git_status,            {} )
+vim.keymap.set('n', '<leader>ls', builtin.lsp_document_symbols,  {} )
+vim.keymap.set('n', 'gr', builtin.lsp_references,
+                                    {noremap = true, silent = true})
+vim.keymap.set('n', 'gd', builtin.lsp_definitions,
+                                    {noremap = true, silent = true})
+
+EOF
+
+" }}}
+" {{{ LSP
+
+" from kickstart TOO BLOATED! У Ларичева хоть аккуратнее, но тоже
+" какая-то хрень намешана. Короче ТОДО
+lua <<EOF
+-- [[ Configure LSP ]]
+
+require("mason").setup {}
+
+-- Enable the following language servers
+--  Add any additional override configuration in the following tables. They will be passed to
+--  the `settings` field of the server config. You must look up that documentation yourself.
+local servers = {
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
+}
+
+-- Ensure the servers above are installed
+local mason_lspconfig = require 'mason-lspconfig'
+
+mason_lspconfig.setup {
+  ensure_installed = vim.tbl_keys(servers),
+}
+
+mason_lspconfig.setup_handlers {
+  function(server_name)
+    require('lspconfig')[server_name].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers[server_name],
+    }
+  end,
+}
+
+
+--  This function gets run when an LSP connects to a particular buffer.
+local on_attach = function(_, bufnr)
+  -- NOTE: Remember that lua is a real programming language, and as such it is possible
+  -- to define small helper and utility functions so you don't have to repeat yourself
+  -- many times.
+  --
+  -- In this case, we create a function that lets us more easily define mappings specific
+  -- for LSP related items. It sets the mode, buffer and description for us each time.
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+
+  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+  -- See `:help K` for why this keymap
+  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+  -- Lesser used LSP functionality
+  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  nmap('<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, '[W]orkspace [L]ist Folders')
+
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format()
+  end, { desc = 'Format current buffer with LSP' })
+end
+
+EOF
+
+" }}}
+" {{{ CMP
+
+" From Larichev
+lua <<EOF
+local cmp = require 'cmp'
+
+cmp.setup({
+    snippet = {
+        -- REQUIRED - you must specify a snippet engine
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        end
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered()
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm(),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end, {"i", "s"}),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end, {"i", "s"})
+    }),
+    sources = cmp.config.sources({
+        {name = 'nvim_lsp'}, {name = 'vsnip'} -- For vsnip users.
+    }, {{name = 'buffer'}, {name = 'nvim_lsp_signature_help'}})
+})
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+        {name = 'cmp_git'} -- You can specify the `cmp_git` source if you were installed it.
+    }, {{name = 'buffer'}})
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({'/', '?'}, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {{name = 'buffer'}}
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
+})
+
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('lspconfig')['tsserver'].setup {capabilities = capabilities}
+
+EOF
+
+" }}}
+" {{{ File Type Setting
+
+let g:markdown_fenced_languages = ['python', 'lua',]
+
+augroup filetype_vim
+  autocmd!
+  autocmd filetype vim setlocal foldmethod=marker
+augroup end
+
+autocmd filetype sh set iskeyword+=$
+
+" for zshrc
+autocmd FileType zsh setlocal foldmethod=marker
+
+" Setup neovim lua configuration
+lua << EOF
+require('neodev').setup()
+
+EOF
+
+" }}}

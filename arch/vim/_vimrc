@@ -1,0 +1,3 @@
+" in any link work catalog should be explicit HOME (or $HOME?)
+let $HOME='c:/cygwin/home/app'
+set shell=c:/cygwin/bin/bash

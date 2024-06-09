@@ -1,0 +1,40 @@
+" this is a backup file...
+"
+" ==================== RUSSIFICATION  ==========================
+lang C
+set encoding=utf-8
+au BufEnter * source $HOME/etc/vim/russian-utf8.vim
+" in windows popup-menu (tooltips) are shown in cp1251, but in menu_ru.utf-8
+" they are in utf. So just comment them in this file.
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/lang/menu_ru.utf-8.vim
+source $VIMRUNTIME/menu.vim
+
+
+" 28.10.2003 17:54:34
+" alternative keyboard
+inoremap <C-\> <C-^>
+" the same as in the normal mode
+inoremap <C-^> <Esc><C-^>
+" insert mode and search in original language (english) at the beginning
+set iminsert=0
+set imsearch=0
+
+" ==================== CYGWIN ==================================
+set shell=c:/cygwin/bin/bash
+set shellcmdflag=-c
+set shellxquote=\"
+
+let g:unix_layer_installed = 1
+
+" doesn't work
+set ff=unix
+
+au BufNewFile * set ff=unix
+
+" ==================== GVIM ====================================
+winsize 80 40
+set guifont=Lucida_Console:h10:cRUSSIAN
+let g:moria_style='whitesmoke'
+colorscheme moria
+

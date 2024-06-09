@@ -1,0 +1,5 @@
+#!/bin/sh
+
+nvrepo="$HOME/var/nvrepo"
+
+ls -dl "$nvrepo"/*

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+conf=~/.config/nvim
+share=~/.local/share/nvim
+state=~/.local/state/nvim
+cache=~/.cache/nvim
+
+die() {
+    echo "$1" >&1 && exit 1
+}
+
+t=
+for f in "$conf" "$share" "$state" "$cache"; do
+    if [ -e "$f" ]; then
+        ! [ -L "$f" ] && t=1 && ls -d "$f"
+    fi
+done
+
+if [ "$t" ]; then
+    echo
+    echo "Some directories are not links."
+    read -p "Do you really want to remove all of them? " yn
+    case $yn in
+        [Yy]* ) : ;;
+        * ) exit  ;;
+    esac
+fi
+
+for f in "$conf" "$share" "$state" "$cache"; do
+    rm -rv "$f"
+done
+

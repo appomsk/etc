@@ -1,0 +1,530 @@
+" vim: fdm=marker
+
+" Working copy
+
+" Plugins
+" =============
+
+" {{{ OPEN
+
+" let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+let data_dir = '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" the explicit dirname for neovim
+call plug#begin('~/var/nvim-repo/vim/plugged')
+
+" }}}
+" {{{ Options
+
+" a universal set of defaults that (hopefully) everyone can agree on.
+if !has('nvim')
+    Plug 'tpope/vim-sensible'
+    Plug 'https://github.com/mikeslattery/nvim-defaults.vim'
+endif
+
+" }}}
+" {{{ UI
+
+Plug 'sainnhe/gruvbox-material'
+
+Plug 'itchyny/lightline.vim'
+
+" }}}
+" {{{ RU
+
+Plug 'https://github.com/lyokha/vim-xkbswitch'
+
+" }}}
+" {{{ Emacs keys
+
+" emacs keybindings
+Plug 'tpope/vim-rsi'
+
+" }}}
+" {{{ Tmux
+
+" Ctrl-H,J,K,L But not for me. Change to M-...
+Plug 'https://github.com/christoomey/vim-tmux-navigator'
+" slime-like
+Plug 'https://github.com/preservim/vimux'
+" to edit .tmux.conf 
+Plug 'https://github.com/tmux-plugins/vim-tmux'
+
+" }}}
+" {{{ Completion
+
+Plug 'https://github.com/ervandew/supertab'
+
+" }}}
+" {{{ FZF
+
+" you need to set up both "fzf" and "fzf.vim"
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+" }}}
+" {{{ Better edit
+
+" Find a char, across lines
+Plug 'dahu/vim-fanfingtastic'
+
+Plug 'godlygeek/tabular'
+Plug 'dhruvasagar/vim-table-mode'
+
+" }}}
+" {{{ CLOSE
+
+"" git
+"Plug 'tpope/vim-fugitive'
+"Plug 'airblade/vim-gitgutter'
+"
+"" file exploring
+"Plug 'tpope/vim-vinegar'
+"
+"" Editor utils
+"" TODO Check for removing
+"Plug 'tpope/vim-commentary'
+"Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-speeddating'
+"Plug 'tpope/vim-repeat'
+"
+"Plug 'Raimondi/delimitMate'
+"
+call plug#end()
+
+" }}}
+
+" Configuration
+" =============
+
+" {{{ Options
+
+" skip startup message
+set shortmess+=I
+
+" no dull questions
+set autowrite
+
+" raise a dialogue asking if you wish to save changed files.
+set confirm
+
+" for 24-bit terminals
+set termguicolors
+
+" Use system clipboard by defaul
+set clipboard=unnamedplus
+
+" mouse
+set mouse=a
+
+
+
+set textwidth=72
+set whichwrap=h,l,<,>,~,[,]
+
+" Search
+set ignorecase
+set smartcase
+
+" TODO with plugin: completion in insert mode 
+set completeopt=menu,menuone,noselect
+
+" For all files
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set shiftround
+
+" TODO to check 
+" if default - any length saves "-remove nohighlighting, only remember
+" the last 10 files, contents of registres (up to 1000 lines) will be
+" remembered, the last 10 search commands, filemarks stored (remember '0),
+" path for viminfo. No global variables, restore the buffer list, no 
+" specific number of the command-line history (see option history - 100)
+set viminfo=h,'10,<1000,/10,f1,n
+
+" .swp files to this dir
+set directory=$HOME/tmp
+
+" }}}
+" {{{ UI
+
+" with dark-pastel in konsole
+colorscheme gruvbox-material
+
+" LightLine
+let g:LL#color = "apprentice"
+
+set ruler
+set laststatus=2
+"set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
+
+" with Nerd fonts
+" for using virtual chars (utf-8) in column count
+let g:lightline = {
+    \ 'colorscheme' : g:LL#color,
+    \ 'component': {
+    \   'lineinfo': '%3l:%-2v',
+    \ },
+    \ 'separator':    { 'left': "\ue0b0", 'right': "\ue0b2" },
+    \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+\ }
+
+" No nerd fonts
+" let g:lightline = {
+"     \ 'colorscheme' : g:LL#color,
+"     \ 'component': {
+"     \   'lineinfo': '%3l:%-2v',
+"     \ },
+" \ }
+
+" }}}
+" {{{ Cursor
+
+if !has('nvim')
+augroup cursor 
+    au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+    au InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' | 
+    \   silent execute '!echo -ne "\e[6 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[4 q"' | redraw! |
+    \ endif
+    au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+augroup END
+endif
+
+" }}}
+" {{{ Main keys
+
+" For cursor in terminal and xgb-switch
+" C-c does not fire InsertLeave event
+inoremap <C-c> <Esc>
+" russian "C"
+inoremap <C-с> <ESC>
+
+if has('nvim') 
+    inoremap <M-c> <Esc>
+    noremap  <M-c> <Esc>
+    " russian "C"
+    inoremap <M-с> <ESC>
+else
+    inoremap c <Esc>
+    noremap  c <Esc>
+    " russian "C"
+    inoremap с <ESC>
+endif
+
+let mapleader=' '
+let g:maplocalleader = '\'
+
+" }}}
+" {{{ Emacs keys
+
+" Make C-k (digraphs) like emacs - delete to the end of a line
+if has("gui_running") || has('nvim')
+    inoremap <M-k> <C-k>
+else
+    " terminal voodoo like in plugin: You can use F13-F36 with Shift
+    " You can't use F keys here with M,C modifiers, also it's possible to map them
+    " -- or just inoremap  ^[k --
+    " silent! exe "set <S-F13>=\<Esc>k"
+    " inoremap <S-F13> <C-k>
+    " NOP It's for tmux-navigator
+    " inoremap k <C-k>
+    inoremap K <C-k>
+endif
+inoremap <C-k> <C-o>D
+
+" TODO cnoremap - write a function?
+
+" }}}
+" {{{ Mappings
+
+" For cursor in terminal and xgb-switch
+" C-c does not fire InsertLeave event
+inoremap <C-c> <Esc>
+cnoremap <C-c> <Esc>
+
+if has('nvim') 
+    inoremap <M-c> <Esc>
+    cnoremap <M-c> <Esc>
+    noremap  <M-c> <Esc>
+else
+    inoremap c <Esc>
+    cnoremap c <Esc>
+    noremap  c <Esc>
+endif
+
+let mapleader=" "
+" let g:maplocalleader = 
+
+" TODO
+" Quick formatting
+nnoremap <M-q> gqap
+
+if !has('nvim')
+    " From Neovim
+    nnoremap Y y$
+    nnoremap <C-L> <Cmd>nohlsearch<Bar>diffupdate<CR><C-L>
+    inoremap <C-U> <C-G>u<C-U>
+    inoremap <C-W> <C-G>u<C-W>
+    noremap Q :execute 'normal! @'.g:qreg<cr>
+
+    " Quick formatting
+    nnoremap q gqap
+endif
+
+" the same as in the normal mode
+inoremap <C-^> <Esc><C-^>
+
+" CR in console 
+" BUT!!!  If you map <CR> in normal mode, it'll interfere
+" with selection of history items in the command-line window and with
+" jumping to error under cursor in quickfix/location list windows!
+" (Unless you add the following:)
+
+:autocmd CmdwinEnter * nnoremap <CR> <CR>
+:autocmd BufReadPost quickfix nnoremap <CR> <CR>
+noremap <CR> i<CR><ESC>
+
+" common in browsers
+" but:
+" noremap <Space> <C-F>
+noremap <leader><Space> <C-F>
+" Shift-BS TODO check in nvim
+noremap  <C-F>
+noremap <BS> <C-B>
+
+" examples
+" inoremap <F2> <ESC>:w<CR>
+" noremap  <F2> :w<CR>
+" noremap  <F5> :!./%<CR>
+" inoremap <F5> <ESC><F5>
+" inoremap <silent> <F4> <ESC>:set colorcolumn=80 number cursorline<CR>i
+
+" TODO Check powerman/vim-plugin-viewdoc
+noremap <C-Up> <C-Y>
+noremap <C-Down> <C-E>
+noremap <M-Down> <C-]>
+noremap <M-Left> <C-o>
+noremap <M-Right> <C-i>
+
+" Make p in Visual mode replace the selected text with the "" register.
+vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+
+" TODO which-keys
+nnoremap <silent> <leader>ve :edit $MYVIMRC<cr>
+nnoremap <silent> <leader>vs :w<cr>:source $MYVIMRC<cr>
+
+" }}}
+" {{{ RU
+
+" xkb-switch
+" git clone https://github.com/grwlf/xkb-switch
+
+" Manjaro
+if !empty(glob("/usr/lib/libxkbswitch.so"))
+    let g:XkbSwitchLib = '/usr/lib/libxkbswitch.so'
+    let g:XkbSwitchEnabled = 1 
+endif
+" OpenSUSE
+if !empty(glob("/usr/lib64/libxkbswitch.so.1"))
+    let g:XkbSwitchLib = '/usr/lib64/libxkbswitch.so.1'
+    let g:XkbSwitchEnabled = 1 
+endif
+if !empty(glob("/usr/local/lib/libxkbswitch.so"))
+    let g:XkbSwitchLib = '/usr/local/lib/libxkbswitch.so'
+    let g:XkbSwitchEnabled = 1 
+endif
+
+" These are more useful
+imap № #
+imap ё `
+imap Ё ~
+
+" As in emacs and C-^ always changed to alternative file
+" alternative keyboard
+inoremap <C-\> <C-^>
+
+" insert mode and search in original language (english) at the beginning
+set iminsert=0
+set imsearch=0
+
+" for menu, etc.
+lang en_US.utf8
+
+" SPELL
+" Словари для русского языка.
+" mkdir -p ~/.vim/spell && 
+" cd ~/.vim/spell && 
+" wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.sug &&
+" wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.spl
+
+"включить проверку орфографии
+set spelllang=ru,en_us
+set nospell
+inoremap <F9> <ESC>:setlocal spell!<CR>
+noremap <F9> :setlocal spell!<CR>
+
+" TODO ???
+nnoremap <C-_> :<C-U>setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+vnoremap <C-_> <Esc>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>gv
+inoremap <C-_> <C-O>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+cnoremap <C-_> <C-C>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+onoremap <C-_> <C-C>:setlocal <C-R>=&spell?"nospell":"spell"<CR><CR>
+
+" }}}
+" {{{ tmux
+
+" Tmux-navigator
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> h :<C-U>TmuxNavigateLeft<cr>
+nnoremap <silent> j :<C-U>TmuxNavigateDown<cr>
+nnoremap <silent> k :<C-U>TmuxNavigateUp<cr>
+nnoremap <silent> l :<C-U>TmuxNavigateRight<cr>
+nnoremap <silent> \ :<C-U>TmuxNavigatePrevious<cr>
+
+" Prompt for a command to run
+map <Leader>tp :VimuxPromptCommand<CR>
+
+" Run last command executed by VimuxRunCommand
+map <Leader>tl :VimuxRunLastCommand<CR>
+
+" Inspect runner pane
+map <Leader>ti :VimuxInspectRunner<CR>
+
+" Close vim tmux runner opened by VimuxRunCommand
+map <Leader>tq :VimuxCloseRunner<CR>
+
+" Interrupt any command running in the runner pane
+map <Leader>tx :VimuxInterruptRunner<CR>
+
+" Zoom the runner pane (use <bind-key> z to restore runner pane)
+map <Leader>tz :call VimuxZoomRunner()<CR>
+
+" TODO It doesn't work because of tmux changes after 2.2
+" If text is selected, save it in the v buffer and send that buffer it to tmux
+function! VimuxSlime()
+call VimuxSendText(@v)
+endfunction
+
+vmap <Leader>ts "vy :call VimuxSlime()<CR>
+
+
+" Select current paragraph and send it to tmux
+
+nmap <Leader>ts vip<Leader>ts<CR>
+
+" Plug 'christoomey/vim-tmux-navigator'
+" very useful for setting tmux.conf
+
+" }}}
+" {{{ Completion
+
+" Enable Omnicomplete features
+set omnifunc=syntaxcomplete#Complete
+
+" }}}
+" {{{ File Types
+
+let g:markdown_fenced_languages = ['python', 'matlab', 'ruby']
+
+augroup filetype_vim
+  autocmd!
+  autocmd filetype vim setlocal foldmethod=marker
+augroup end
+
+autocmd filetype sh set iskeyword+=$
+
+" for zshrc
+autocmd FileType zsh setlocal foldmethod=marker
+
+" }}}
+" {{{ Misc
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\   exe "normal g`\"" |
+\ endif
+
+" }}}
+" {{{ Fugutive
+
+" }}}
+" {{{ fzf
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Another 
+" nnoremap <silent> <Leader>b :Buffers<CR>
+" nnoremap <silent> <C-f> :Files<CR>
+" nnoremap <silent> <Leader>f :Rg<CR>
+" nnoremap <silent> <Leader>/ :BLines<CR>
+" nnoremap <silent> <Leader>' :Marks<CR>
+" nnoremap <silent> <Leader>g :Commits<CR>
+" nnoremap <silent> <Leader>H :Helptags<CR>
+" nnoremap <silent> <Leader>hh :History<CR>
+" nnoremap <silent> <Leader>h: :History:<CR>
+" nnoremap <silent> <Leader>h/ :History/<CR>
+
+" }}}
+" {{{ NetRW 
+
+" I for help bunner
+" F1 by default but it for quake-terminal
+autocmd filetype netrw noremap <buffer> <leader>h :help netrw-quickhelp<CR>
+" NetRW hide hidden files
+let ghregex='\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_list_hide=ghregex
+
+" }}}
+" {{{ delimitMate
+
+let delimitMate_autoclose = 0
+
+" }}}
+" GUI {{{
+
+" IT DOES NOT WORK WITH NEOVIM - ONLY SEPARATED GINIT.VIM
+if has('gui_running')
+    colorscheme gruvbox-material
+
+    set guicursor=a:blinkwait0,a:
+    " set guifont=Consolas:h11:cRUSSIAN
+    " set guifont=Consolas\ 12
+    set guifont=Ubuntu\ Mono\ NerdFont\ 11 
+
+    " tabs
+    set showtabline=1
+    map <C-Tab> :tabnext<CR>
+    imap <C-Tab> <ESC><C-Tab>
+
+    set guioptions-=T
+    set guioptions-=m
+    set guioptions-=r
+
+    inoremap <C-S-v> <C-o>"+gP
+
+    " visual copying copy to clipboard too (?)
+set guioptions+=a
+
+endif
+
+" }}}

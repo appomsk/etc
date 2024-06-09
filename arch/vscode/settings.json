@@ -1,0 +1,117 @@
+// vim: fdm=marker
+{
+  //#region Global settings {{{
+  "editor.cursorBlinking": "solid",
+  "editor.fontFamily": " 'UbuntuMono NF', 'Consolas', 'monospace', monospace, 'Droid Sans Fallback'",
+  "editor.fontSize": 17,
+  "editor.minimap.enabled": false,
+  "terminal.integrated.fontWeightBold": "normal",
+  "editor.fontWeight": "100",
+  "terminal.integrated.fontSize": 16,
+  "workbench.settings.editor": "json",
+  "workbench.settings.useSplitJSON": true,
+  "workbench.startupEditor": "none",
+  //  "editor.wordWrap": "on",
+  //  "editor.wordWrapColumn": 72,
+  //  "editor.selectionHighlight": false,
+  "editor.matchBrackets": "never",
+  "security.workspace.trust.untrustedFiles": "open",
+  "window.menuBarVisibility": "toggle",
+  "editor.occurrencesHighlight": "off",
+  "workbench.colorTheme": "Monokai Dimmed",
+
+  //#endregion }}}
+  //#region IntelliSense {{{
+ 
+  // Controls whether suggestions should automatically show up while
+  // typing. This can be controlled for typing in comments, strings, and
+  // other code. Quick suggestion can be configured to show as ghost
+  // text or with the suggest widget. Also be aware of the
+  // '#editor.suggestOnTriggerCharacters#'-setting which controls if
+  // suggestions are triggered by special characters.
+  "editor.quickSuggestions": {
+    "other": "off",
+    "comments": "off",
+    "strings": "off"
+  },
+
+  // Controls the delay in milliseconds after which 
+  // quick suggestions will show up.
+  "editor.quickSuggestionsDelay": 10,
+
+  // Controls if suggestions should automatically show up 
+  // when typing trigger characters
+  "editor.suggestOnTriggerCharacters": false,
+
+  // Controls if pressing tab inserts the best suggestion and 
+  // if tab cycles through other suggestions
+  "editor.tabCompletion": "on",
+  
+  // Controls how suggestions are pre-selected when showing the suggest list
+  "editor.suggestSelection": "first",
+
+  //#endregion }}}
+  //#region Vim {{{
+
+    // {{{2 Switch
+  // "vim.autoSwitchInputMethod.obtainIMCmd": "c:\\\\opt\\\\im-select.exe",
+  // "vim.autoSwitchInputMethod.switchIMCmd": "c:\\\\opt\\im-select.exe {im}",
+  // "vim.autoSwitchInputMethod.enable": true,
+  // "vim.autoSwitchInputMethod.defaultIM": "1033",
+  // "vim.vimrc.path": "c:\\\\cygwin\\\\home\\\\yazu\\\\etc\\\\dotfiles\\\\vimrc",
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.obtainIMCmd": "/usr/local/bin/xkb-switch",
+  "vim.autoSwitchInputMethod.switchIMCmd": "/usr/local/bin/xkb-switch -s {im}",
+  "vim.autoSwitchInputMethod.defaultIM": "us",
+  // }}}
+  "vim.enableNeovim": true,
+  //  "vim.neovimPath": "~/bin/nvim",
+  "vim.vimrc.enable": true,
+  "vim.useSystemClipboard": true,
+  "vim.insertModeKeyBindings": [],
+  "vim.leader": ",",
+  "vim.textwidth": 72,
+  "vim.whichwrap": "b,s,h,l,left,right",
+  "vim.neovimUseConfigFile": true,
+  //#endregion }}}
+  //#region Languages {{{ 
+  "javascript.format.semicolons": "remove",
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "terminal.integrated.commandsToSkipShell": [
+    "language-julia.interrupt"
+  ],
+//  "julia.symbolCacheDownload": true,
+//  "julia.enableTelemetry": false,
+  "jupyter.askForKernelRestart": false,
+
+  "wolfram.kernel": "/home/yazu/opt/math/Executables/WolframKernel",
+  "haskell.manageHLS": "GHCup",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/*.olean": true
+  },
+
+  "python.linting.enabled": false,
+  "python.analysis.ignore": [ "*" ],
+  //#endregion }}}
+  //#region Misc {{{
+  // remove error with no scheme (russia country issue)
+  "http.proxySupport": "off",
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "julia.symbolCacheDownload": true,
+  "julia.enableTelemetry": false
+  //#endregion }}}
+}
