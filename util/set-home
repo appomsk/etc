@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. ../profile
+
+cd $HOME
+ln -fs $ETC/profile .profile
+
+set -- $LIB $VAR/profile.d
+for d; do
+    mkdir -p $d
+done
+set --

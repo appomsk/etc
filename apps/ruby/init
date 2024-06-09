@@ -17,15 +17,11 @@ PROFILED="$VAR/profile.d"
 [ -e "$PROFILED" ] || {
     echo "$PROFILED does not exist" >&2; exit 1; }
 
-b=$LIB/$APP/bin
-
-[ -e $b ] && ! [ -L $b ] \
-    && echo "Error: $b exist and it is not a link" >&2 \
-    && return 1
-
 mkdir -p $LIB/$APP
-ln -sf $HOME/.local/bin $b
 
 cat <<'END' >$PROFILED/$APP-dirs
-GEM_HOME=$LIB/ruby; export GEM_HOME
+GEM_HOME="$LIB/ruby"
+export GEM_HOME
+
+prepend_path "$GEM_HOME/bin"
 END

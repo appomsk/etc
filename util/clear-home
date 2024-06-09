@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. ../profile
+
+set -- $LIB $VAR/profile.d
+for d; do
+    rm -vrf $d 2>/dev/null
+done
+set --

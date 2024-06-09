@@ -21,32 +21,26 @@
 
 ## END Ubuntu 
 
-# The last line: PROFILE_DONE=`mktemp`
-# [ -f "$PROFILE_DONE" ] && return
-
-ETC=$HOME/usr/etc/
-LIB=$HOME/usr/lib/
-export ETC LIB
-
-for f in $ETC/profile.d/*; do
-    source $f
-done
-
-# for Manjaro (and Arch?)
-# export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+ETC=$HOME/usr/etc
+LIB=$HOME/usr/lib
+VAR=$HOME/var
+export ETC LIB VAR
 
 prepend_path () {
     case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="$1:$PATH"
+        *:"$1":*) ;;
+        "::") PATH="$1" ;;
+        *) PATH="$1:$PATH" ;;
     esac
 }
+
+[ -e "$VAR/profile.d" ] && [ "$(ls "$VAR/profile.d")" ] \
+    && for f in "$VAR/profile.d/"*; do . $f; done 
+
+# for Manjaro (and Arch?)
+# export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 
 prepend_path "$HOME/.local/bin"
 prepend_path "$HOME/bin"
 
 export PATH
-
-PROFILE_DONE=`mktemp`

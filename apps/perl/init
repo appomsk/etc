@@ -1,5 +1,7 @@
 # vim: ft=sh
 
+# TODO test it better
+
 APP=perl
 
 [ "$HOME" ] && [ "$ETC" ] && [ "$LIB" ] && [ "$VAR" ] || { 
@@ -17,25 +19,31 @@ PROFILED="$VAR/profile.d"
 [ -e "$PROFILED" ] || {
     echo "$PROFILED does not exist" >&2; exit 1; }
 
-b=$LIB/$APP/bin
-
-[ -e $b ] && ! [ -L $b ] \
-    && echo "Error: $b exist and it is not a link" >&2 \
-    && return 1
-
 mkdir -p $LIB/$APP
-ln -sf $HOME/.local/bin $b
 
 cat <<'END' >$PROFILED/$APP-dirs
 export PERL_BASE=$LIB/perl
-# export PATH="$PERL_BASE/bin${PATH:+:$PATH}"
+
+prepend_path "$PERL_BASE/bin"
+
 export PERL_MM_OPT="INSTALL_BASE=$PERL_BASE"
 export PERL_MB_OPT="--install_base $PERL_BASE"
-export PERL5LIB="$PERL_BASE/lib/perl5"
-export MANPATH="$PERL_BASE/man${MANPATH:+:$MANPATH}"
+
+_t="$PERL_BASE/lib/perl5"
+case ":$PERL5LIB:" in
+    *:"$_t":*) ;;
+    "::") PERL5LIB="$_t" ;;
+    *) PERL5LIB="$_t:$PERL5LIB" ;;
+esac
+export PERL5LIB
+
+_t="$PERL_BASE/man"
+case ":$MANPATH:" in
+    *:"$_t":*) ;;
+    "::") MANPATH="$_t" ;;
+    *) MANPATH="$_t:$MANPATH" ;;
+esac
+export MANPATH
+
+unset _t
 END
-
-
-
-
-
