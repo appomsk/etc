@@ -1,0 +1,19 @@
+# vim: ft=sh
+
+[ "$HOME" ] && [ "$ETC" ] && [ "$LIB" ] && [ "$VAR" ] || { 
+    echo "
+Error: configuration variables are not set: 
+\$HOME: $HOME
+\$ETC:  $ETC
+\$LIB:  $LIB
+\$VAR:  $VAR
+" >&2
+exit 1
+}
+
+app=$(realpath $(dirname $0))
+
+# TODO: Plugins in $LIB/tmux
+ln -sf $app/gitconfig $HOME/.gitconfig
+ln -sf $app/tigrc     $HOME/.tigrc
+

@@ -1,0 +1,26 @@
+[user]
+	email = appomsk@gmail.com
+	name = appomsk
+[push]
+	default = simple
+[color]
+	ui = true
+	pager = no
+[pull]
+	rebase = false
+[credential]
+	helper = cache
+[init]
+	defaultBranch = master
+[diff]
+	tool = vimdiff
+[alias]
+	g = status -s
+[core]
+	pager = nvim -R
+	compression = 9
+[http]
+	version = HTTP/1.1
+	postBuffer = 524288000
+	lowSpeedLimit = 0
+	lowSpeedTime = 999999
