@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: turtle
+# uuid:
+# key: trtl
+# condition: t
+# --
+
+#+begin_src python :results silent
+import turtle
+t = turtle.Turtle()
+
+$0
+
+turtle.Screen().exitonclick()
+#+end_src

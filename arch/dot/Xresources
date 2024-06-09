@@ -1,0 +1,139 @@
+xterm*faceName:     UbuntuMono NF:style=Regular:size=13
+xterm*saveLines: 10000
+xterm*loginShell: true
+xterm*VT100.geometry: 80x43
+! sent [ insted of 8bit char
+! xterm*eightBitInput: true
+! тоже самое ?
+XTerm*metaSendsEscape: true
+
+! no need
+! xterm*utf8: 2
+
+! does not work
+! xterm*boldMode: false
+xterm*allowBoldFonts: false
+
+! ???
+! Forbid bold font faces; bold type is light blue.
+XTerm*colorBDMode: true
+XTerm*colorBD: rgb:82/a4/d3
+! Do not underscore text, underlined text is white.
+XTerm*colorULMode: true
+XTerm*colorUL: rgb:e4/e4/e4
+
+! {{{ Quick Reference
+!
+! Scrolling:
+!   Scroll Wheel
+!   Shift-PgUp/PgDn
+!
+! Copy/Paste:
+!   Mouse-Select        : Copy to PRIMARY
+!   Shift + Mouse-Select: Copy to CLIPBOARD
+!
+!   Middle-Click        : Paste from PRIMARY
+!   Shift + Middle-Click: Paste from CLIPBOARD
+!
+!   Ctrl+Shift+V        : Paste from CLIPBOARD
+!   Ctrl+Alt+Shift+V    : Paste from PRIMARY
+!
+! }}}
+
+! More Konsole/Yakuake-like keybindings:
+xterm*VT100.Translations: #override \
+Shift <Key>Up:              scroll-back(1) \n\
+Shift <Key>Down:            scroll-forw(1) \n\
+~Meta Shift Ctrl <Key>V:    insert-selection(CLIPBOARD) \n\
+Meta Shift Ctrl <Key>V:    insert-selection(PRIMARY) \n\
+~Shift <Btn1Up>:            select-end(PRIMARY, CUT_BUFFER0) \n\
+Shift <Btn1Up>:            select-end(CLIPBOARD, CUT_BUFFER1) \n\
+~Shift ~Ctrl ~Meta <Btn2Up>:insert-selection(PRIMARY, CUT_BUFFER0) \n\
+Shift ~Ctrl ~Meta <Btn2Up>:insert-selection(CLIPBOARD, CUT_BUFFER1)
+
+! URxvt
+URxvt*.scrollBar: false
+! прокручивать по отношению к буферу (прокрутка мышью или Shift+Page Up)
+URxvt*scrollWithBuffer: true
+! прокрутка по нажатию клавиши
+URxvt*scrollTtyKeypress: true
+
+URxvt*.iso14755: False 
+URxvt*.modifier: mod1
+! from arch-wiki - must have - scroll info but the terminal
+! but what with tmux?
+xvt.secondaryScreen: 1
+URxvt*.secondaryScroll: 0
+
+URxvt*font: xft:UbuntuMono NF:style=Regular:size=14
+Rxvt*letterSpace:0 
+URxvt*.boldFont:
+
+! Perl
+URxvt*.perl-ext-common: default,matcher,fullscreen,clipboard,newterm
+URxvt*.url-launcher: /usr/bin/firefox
+URxvt*.matcher.button: 1
+URxvt*.matcher.rend.0: Uline Bold fg5
+
+URxvt*.keysym.Shift-Control-U: perl:fullscreen:switch
+URxvt*.keysym.F11: perl:fullscreen:switch
+URxvt*.keysym.Shift-Control-N: perl:newterm
+
+
+URxvt*.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt*.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt*.clipboard.copycmd:  xsel -ib
+URxvt*.clipboard.pastecmd: xsel -ob
+
+! FAKE Do not even try for v9.21
+! URxvt*transparent: true
+! URxvt*shading: 30
+
+URxvt*.depth: 32
+! foreground color for underline
+URxvt*colorUL:            #8ae234
+! line color for underline
+URxvt*underlineColor:     #92659a
+!  Bright
+! Scheme: Chris Kempson (http://chriskempson.com)
+
+! URxvt*.background:
+! URxvt*.background: [75]#1d1f21
+URxvt*.background: #1d1f21
+
+! special
+URxvt*.foreground:   #ffffff
+!URxvt*.background:   #000000
+URxvt*.cursorColor:  #ababab
+
+! black
+URxvt*.color0:       #000000
+URxvt*.color8:       #848484
+
+! red
+URxvt*.color1:       #e92f2f
+URxvt*.color9:       #e92f2f
+
+! green
+URxvt*.color2:       #0ed839
+URxvt*.color10:      #0ed839
+
+! yellow
+URxvt*.color3:       #dddd13
+URxvt*.color11:      #dddd13
+
+! blue
+URxvt*.color4:       #3b48e3
+URxvt*.color12:      #7979ff
+
+! magenta
+URxvt*.color5:       #f996e2
+URxvt*.color13:      #f996e2
+
+! cyan
+URxvt*.color6:       #23edda
+URxvt*.color14:      #23edda
+
+! white
+URxvt*.color7:       #ababab
+URxvt*.color15:      #f9f9f9

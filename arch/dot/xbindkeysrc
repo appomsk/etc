@@ -1,0 +1,72 @@
+##Delete
+#"xvkbd -xsendevent -text '\[Delete]'"
+#   Mod4 + BackSpace
+#
+##End
+#"xvkbd -xsendevent -text '\[End]'"
+#   Mod4 + Right
+#
+##Home
+#"xvkbd -xsendevent -text '\[Home]'"
+#   Mod4 + Left
+#
+##Page Down
+#"xvkbd -xsendevent -text '\[Page_Down]'"
+#   Mod4 + Down
+#
+##Page Up
+#"xvkbd -xsendevent -text '\[Page_Up]'"
+#   Mod4 + Up
+#
+##Ctrl-Delete
+#"xvkbd -xsendevent -text '\C\[Delete]'"
+#    Shift+Mod4 + BackSpace 
+#
+##Ctrl-Home
+#"xvkbd -xsendevent -text '\C\[Home]'"
+#    Control+Mod4 + Left 
+#
+##Ctrl-End
+#"xvkbd -xsendevent -text '\C\[End]'"
+#    Control+Mod4 + Right 
+#
+##Shift-PgUp
+#"xvkbd -xsendevent -text '\S\[Page_Up]'"
+#  Shift + Mod4 + Up
+#
+##Shift-PgDown
+#"xvkbd -xsendevent -text '\S\[Page_Down]'"
+#  Shift + Mod4 + Down
+#
+##F11
+#"xvkbd -xsendevent -text '\[F11]'"
+# Mod4 + minus
+#
+##F12
+#"xvkbd -xsendevent -text '\[F12]'"
+#  Mod4 + equal
+
+ "xdotool keyup Super+F1; xdotool key alt+Left"
+     Mod4 + F1
+ "xdotool keyup Super+F2; xdotool key alt+Right"
+     Mod4 + F2
+ "xdotool keyup Super+F3; xdotool key ctrl+r"
+     Mod4 + F3
+ "xdotool keyup Super+minus; xdotool key F11"
+     Mod4 + F4
+ "xdotool keyup Super+F5; xdotool key alt+Tab"
+     Mod4 + F5
+ "xdotool keyup Super+BackSpace; xdotool key Delete; xdotool keydown Super"
+     Mod4 + BackSpace
+ "xdotool keyup Super+Left; xdotool key Home; xdotool keydown Super"
+     m:0x40 + c:113
+     Mod4 + Left
+ "xdotool keyup Super+Right; xdotool key End; xdotool keydown Super"
+     m:0x40 + c:114
+     Mod4 + Right
+ "xdotool keyup Super+Up; xdotool key Prior; xdotool keydown Super"
+     m:0x40 + c:111
+     Mod4 + Up
+ "xdotool keyup Super+Down; xdotool key Next; xdotool keydown Super"
+     m:0x40 + c:116
+     Mod4 + Down
