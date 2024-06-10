@@ -10,6 +10,7 @@ source $ETC/shell/shrc_common
 
 # }}}
 # Environment {{{
+
 # the best - ^PATTERN
 setopt extended_glob
 #  Sort globs that expand to numbers numerically, not by letter (i.e. 01 2 03)
@@ -35,8 +36,10 @@ unsetopt flow_control
 setopt rm_star_silent
 # Like every other echo: do not interprete \t etc.
 setopt bsd_echo
+
 # }}}
 # History {{{
+
 export HISTFILE=$_zshdir/zsh_history
 # N events (lines)
 export HISTSIZE=10000
@@ -44,17 +47,18 @@ export SAVEHIST=10000
 ## for multiple zsh sessions
 setopt append_history
 # Add commands to history as they are typed, don't wait until shell exit
-setopt INC_APPEND_HISTORY
+setopt inc_append_history
 # Remove extra blanks from each command line being added to history
-setopt HIST_REDUCE_BLANKS
-## Check - timestamps in history file
-# setopt extended_history
-## Do not save any dups - there are other options 
+setopt hist_reduce_blanks
+# Timestamps in history file
+setopt extended_history
+# Do not save any dups - there are other options 
 setopt hist_ignore_all_dups
-## Check - !expansion do not execute but just in buffer
+# !expansion do not execute but just in buffer
 setopt hist_verify
 ## Shares history across multiple zsh sessions, in real time
 setopt share_history
+
 # }}}
 # {{{ Global aliases
 alias -g HH='|head'
@@ -68,12 +72,12 @@ alias -g VV='|& vv'
 # alias -g M='|most'
 # alias -g R='| tr A-z N-za-m'
 # alias -g SL='| sort | less'
-alias -g SS='| sort'
+alias -g SS='|sort'
 alias -g TT='|tail'
 alias -g GG='|grep -i'
 alias -g CC='|wc -l'
 alias -g NN='&>/dev/null'
-alias -g XX='-print0 | xargs -0'
+
 # }}}
 # Prompt {{{
 # my attemp
@@ -129,7 +133,7 @@ prompt_yazu_precmd()
     # space + [ + ]
     (( len += ${#me} + 3 ))
 
-#    vcs_info
+    vcs_info
 
     local free=$((COLUMNS-len-1))
     print -nPr "%B%F{black}"
@@ -384,12 +388,15 @@ bindkey -s "^\^" "\^\^^b"
 # }}}
 # {{{ Misc
 
-autoload -U zmv
 autoload -Uz zed
+autoload -U zmv
 alias zmv='noglob zmv'
 
+# }}}
+# {{{ CD
+
 # Set a search path for the cd builtin
-cdpath=(.. ~ ~/etc ~/proj)
+cdpath=(.. ~ ~/etc ~/proj ~/work)
 
 # type only the name of dir
 setopt autocd
@@ -398,6 +405,9 @@ setopt autocd
 hash -d -r
 hash -d l=$VAR/xdg/load
 hash -d t=$VAR/xdg/top
+hash -d e=$ETC
+hash -d lib=$LIB
+hash -d n=$NOTES
 
 setopt auto_pushd
 alias p='popd >/dev/null && ls

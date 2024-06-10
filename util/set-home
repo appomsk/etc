@@ -4,32 +4,32 @@
 { echo Install curl and git >&2; exit 1; }
 
 # get ETC, VAR, LIB
-. $(dirname $0)/../profile
+. $(dirname "$0")/../profile
 
 # make dirs
-vardirs="profile.d tmp opt xdg" 
+vardirs="profile.d opt xdg" 
 
-cd $HOME
-ln -fs $ETC/profile .profile
+cd "$HOME" || exit
+ln -fs "$ETC"/profile .profile
 
-mkdir -p $VAR $LIB
+mkdir -p "$VAR" "$LIB" tmp
 
-cd $VAR
+cd "$VAR" || exit
 for d in $vardirs; do
-    mkdir -p $d
+    mkdir -p "$d"
 done
 
 # bin
-mkdir -p $HOME/.local/bin $HOME/bin
-cd $HOME/bin
+mkdir -p "$HOME"/.local/bin "$HOME"/bin
+cd "$HOME"/bin || exit
 for f in $ETC/bin/*; do
     ln -sf "$f"
 done
 
 # xdg
-mkdir -p $HOME/.config
+mkdir -p "$HOME"/.config
 
-cat <<END >$HOME/.config/user-dirs.dirs
+cat <<END >"$HOME"/.config/user-dirs.dirs
 XDG_DESKTOP_DIR="$LIB/xdg/top/"
 XDG_DOWNLOAD_DIR="$LIB/xdg/load/"
 XDG_TEMPLATES_DIR="$LIB/xdg/templates/"
@@ -40,16 +40,21 @@ XDG_PICTURES_DIR="$LIB/xdg/pictures/"
 XDG_VIDEOS_DIR="$LIB/xdg/videos/"
 END
 
+mkdir -p "$VAR"/xdg
+cd "$VAR"/xdg || exit
+mkdir -p top load documents music pictures videos
+cd "$HOME" || exit
+
 # init
 for app in $ETC/apps/*; do
     [ -f "$app/init" ] && sh "$app/init"
 done
 
 # private config TODO
-cd $HOME
+cd "$HOME" || exit
 mkdir -p .ssh
 chmod 700 .ssh
-cd .ssh
+cd .ssh || exit
 chmod 600 *
 
 true

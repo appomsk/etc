@@ -24,7 +24,8 @@
 ETC=$HOME/usr/etc
 LIB=$HOME/usr/lib
 VAR=$HOME/var
-export ETC LIB VAR
+NOTES=$HOME/usr/notes
+export ETC LIB VAR NOTES
 
 prepend_path () {
     case ":$PATH:" in

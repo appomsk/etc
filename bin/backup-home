@@ -1,9 +1,8 @@
 #!/bin/sh
 
-files="etc"
-filesdot="bin var .tmux .vimrc .vim .config/nvim"
+files="bin usr .tmux"
 filesproj="proj work"
-filesfull="$files $filesdot $filesproj"
+filesfull="$files $filesproj var"
 filesbrave=".config/BraveSoftware .cache/BraveSoftware"
 
 taroptions="--ignore-failed-read -czf"
@@ -12,7 +11,6 @@ usage="Usage: $(basename $0) [-h|--help] [-f]
 
 Backup ~/$files
 
-With -d backup $filesdot
 With -p backup $filesproj
 With -f backup $filesfull
 With -b backup $filesbrave
@@ -20,7 +18,6 @@ With -b backup $filesbrave
 
 case "$1" in
     -h | --help) echo "$usage"; exit ;;
-    -d ) dot=1  ;; 
     -p ) proj=1 ;;
     -f ) full=1 ;;
     -b ) brave=1 ;;
@@ -29,10 +26,7 @@ esac
 
 t=$(date +%d-%m-%Y)-$(hostname)
 arj=$t.tar.gz
-if [ "$dot" ]; then
-    arj=$t-dot.tar.gz
-    files="$filesdot"
-elif [ "$proj" ]; then
+if [ "$proj" ]; then
     arj=$t-projwork.tar.gz
     files="$filesproj"
 elif [ "$full" ]; then

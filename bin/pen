@@ -3,6 +3,9 @@
 # TODO getarg for `pen -d PEN` of `pen PEN -d`
 # for date without header 
 
+[ -z "$NOTES" ] && { echo "Set NOTES variable" >&2; exit 1; }
+PENSDIR="$NOTES"/pens
+
 firstline='M | S | P | H | C | J'
 secondline='Math|Science|Philosophy|Human|Computers|Junk'
 USAGE="Usage: [-h|--help] $(basename "$0") [PAD] [TITLE]
