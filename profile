@@ -23,6 +23,7 @@
 
 ETC=$HOME/usr/etc
 LIB=$HOME/usr/lib
+XDG=$HOME/usr/xdg
 VAR=$HOME/var
 NOTES=$HOME/usr/notes
 export ETC LIB VAR NOTES

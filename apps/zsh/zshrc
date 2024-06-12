@@ -403,8 +403,8 @@ setopt autocd
 
 # named dirs
 hash -d -r
-hash -d l=$VAR/xdg/load
-hash -d t=$VAR/xdg/top
+hash -d l=$XDG/load
+hash -d t=$XDG/top
 hash -d e=$ETC
 hash -d lib=$LIB
 hash -d n=$NOTES

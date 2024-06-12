@@ -33,13 +33,14 @@ case ":$PERL5LIB:" in
 esac
 export PERL5LIB
 
-_t="$PERL_BASE/man"
-case ":$MANPATH:" in
-    *:"$_t":*) ;;
-    "::") MANPATH="$_t" ;;
-    *) MANPATH="$_t:$MANPATH" ;;
-esac
-export MANPATH
+# Manpath should be empty or include all man-pathes
+#_t="$PERL_BASE/man"
+#case ":$MANPATH:" in
+#    *:"$_t":*) ;;
+#    "::") MANPATH="$_t" ;;
+#    *) MANPATH="$_t:$MANPATH" ;;
+#esac
+#export MANPATH
 
 unset _t
 END

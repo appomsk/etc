@@ -12,7 +12,8 @@ vardirs="profile.d opt xdg"
 cd "$HOME" || exit
 ln -fs "$ETC"/profile .profile
 
-mkdir -p "$VAR" "$LIB" tmp
+# $LIB/tmp - tmp stuff for backup
+mkdir -p "$VAR" "$LIB" "$LIB/tmp" tmp
 
 cd "$VAR" || exit
 for d in $vardirs; do
@@ -26,23 +27,23 @@ for f in $ETC/bin/*; do
     ln -sf "$f"
 done
 
-# xdg
+# not my xdg
 mkdir -p "$HOME"/.config
 
 cat <<END >"$HOME"/.config/user-dirs.dirs
-XDG_DESKTOP_DIR="$LIB/xdg/top/"
-XDG_DOWNLOAD_DIR="$LIB/xdg/load/"
-XDG_TEMPLATES_DIR="$LIB/xdg/templates/"
-XDG_PUBLICSHARE_DIR="$LIB/xdg/share/"
-XDG_DOCUMENTS_DIR="$LIB/xdg/documents/"
-XDG_MUSIC_DIR="$LIB/xdg/music/"
-XDG_PICTURES_DIR="$LIB/xdg/pictures/"
-XDG_VIDEOS_DIR="$LIB/xdg/videos/"
+XDG_DESKTOP_DIR="$XDG/top/"
+XDG_DOWNLOAD_DIR="$XDG/load/"
+XDG_TEMPLATES_DIR="$XDG/templates/"
+XDG_PUBLICSHARE_DIR="$XDG/share/"
+XDG_DOCUMENTS_DIR="$XDG/documents/"
+XDG_MUSIC_DIR="$XDG/music/"
+XDG_PICTURES_DIR="$XDG/pictures/"
+XDG_VIDEOS_DIR="$XDG/videos/"
 END
 
-mkdir -p "$VAR"/xdg
-cd "$VAR"/xdg || exit
-mkdir -p top load documents music pictures videos
+mkdir -p "$XDG"
+cd "$XDG"  || exit
+mkdir -p top load documents templates share music pictures videos
 cd "$HOME" || exit
 
 # init
