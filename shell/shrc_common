@@ -67,46 +67,13 @@ source $SHRC_DIR/gits
 # TODO pklf - list files of package
 case `lsb_release -d` in
 *Debian* | *Ubuntu* | *Mint*)
-    # clean
-    alias pkc='sudo apt-get clean && sudo apt-get -y autoremove'
-    # upgrade
-    alias pkup='sudo apt-get update \
-        && sudo apt-get -y upgrade \
-        && sudo apt-get clean'
-    # update
-    alias pkupd='sudo apt-get update'
-    # search package names
-    alias pks='aptitude search'
-    # search pattern in descriptions
-    alias pkss='apt-cache search'
-    # apt-xapian-index - the best but 100 mgb cache + daemons
-    alias pksx='axi-cache search'
-    # describe package
-    alias pkd='apt show'
-    alias pkd1='apt-cache show'
-    # install
-    alias pki='sudo apt-get install'
-    alias pki1='sudo apt install'
-    # what package owns file
-    alias pkf='dpkg -S'
-    # remove package
-    alias pkr='sudo apt-get purge'
-    # no purge
-    alias pkr1='sudo apt remove --purge'
-    # list installed packages
-    alias pkl='apt --installed list'
-    # list all packages in the system
-    alias pkls="dpkg -l | tail -n+6 | \
-        awk '{printf \"%-4s%-50s %s\n\", \$1, \$2, \$3}'"
-    # list all known packages
-    alias pkla='2>/dev/null noglob apt list'
-    alias pkla1='apt-cache pkgnames'
-    # statistics
-    alias pkst='apt-cache stats'
-
-    alias pki='noglob sudo apt-get install '
-    alias pkr='noglob sudo apt-get remove --purge '
-
+    local src=$SHRC_DIR/apt.src
+    alias pkview="$PAGER $src"
+    alias pkv="cat $src            \
+        | sed -n '/^##/,/^$/p'     \
+        | sed 's/^## //; s/^#//'   \
+        | $PAGER"
+    source $src
 # OTHER
 
     # and ln -s $HOME/bin/fd /usr/bin/fdfind
@@ -289,8 +256,8 @@ alias M=_M
 # Quick edit configs
 alias ez='vim ~/.zshrc && source ~/.zshrc'
 alias et='vim ~/.tmux.conf'
-alias es='vim ~/etc/conf/shell/shrc_common &&
-                source ~/etc/conf/shell/shrc_common'
+alias es='vim $SHRC_DIR/shrc_common &&
+                source $SHRC_DIR/shrc_common'
 
 alias out='tmux kill-server 2>/dev/null; exit'
 
