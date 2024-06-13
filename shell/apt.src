@@ -1,0 +1,92 @@
+# -*- mode: Shell -*- vim: ft=sh
+
+## Update
+#    pkup:  Update/upgrade the system
+
+alias pkup='sudo apt update \
+    && sudo apt -y upgrade \
+    && sudo apt clean'
+
+# update only
+alias pkupdate='sudo apt update'
+
+# upgrade 
+alias pkupgrade='sudo apt upgrade'
+
+# TODO
+alias pkupf='sudo apt-get dist-upgrade'
+
+## Install 
+#    pki PKG: install package
+
+# alias pki='sudo apt install'
+# zsh TODO
+alias pki='noglob sudo apt-get install '
+
+# TODO
+# install local package 
+alias pkinstall-local='sudo dpkg -i'
+
+## Remove
+#    pkr PKG: remove package
+
+# zsh TOD
+alias pkr='noglob sudo apt-get remove --purge '
+# alias pkr='sudo apt-get remove --purge'
+
+# TODO
+# remove package even it is needed. CAUTION
+# alias pkremove-force=''
+
+## Search 
+#    pks  PAT [PAT2]: Search PAT & PAT2 in known packages
+
+alias pks='apt-cache search'
+# alias pkss='aptitude search'
+
+# TODO
+# apt-xapian-index - the best but 100 mgb cache + daemons
+# alias pksx='axi-cache search'
+
+## Info
+#    pkd PKG: describe a package
+
+alias pkd='apt-cache show'
+# alias pkd1='apt show'
+
+# TODO installed? dpkg --status but only for installed
+
+## Files
+#    pkl PKG: list all files owned by a package
+
+alias pkl='dpkg-query -L'
+
+## File owner
+#    pkf FILENAMEPART: Find package that owns the file
+
+# searches for given string in filename
+alias pkf='dpkg -S'
+
+## Packages
+#    pkp: list all installed packages
+
+alias pkp="dpkg -l | tail -n+6 | awk '{printf \"%-30s %s\n\", \$2, \$3}'"
+# alias pkp='apt --installed list'
+
+# list all known packages
+alias pklist-all='apt-cache pkgnames'
+# alias pklist-all='2>/dev/null noglob apt list'
+
+## Clean
+#    pkc: Clean the system
+
+alias pkc='sudo apt-get clean && sudo apt-get -y autoremove'
+
+# statistics
+alias pkstats='apt-cache stats'
+
+## More
+#
+# * https://ubuntu.com/server/docs/package-management 
+#
+# * https://help.ubuntu.com/community/AptGet/Howto
