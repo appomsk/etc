@@ -152,7 +152,20 @@ alias cdr='cd -P . && cd'
 #         for (i=1;i<=n;++i) printf "%2d  %s\n", i-1, arr[i] }'
 # }
 # }}}
-# Colors for man {{{
+# {{{ ls
+
+alias ls='ls --color=auto'
+alias l='ls'
+alias la='ls -A'
+alias ll='ls -lh'
+alias lla='ls -lA'
+# alias l.='ls -d .[^.]*' # just quiet
+# dash does not understand [^...]
+alias l.='sh -c "ls --color -d .[!.]*" 2>/dev/null || true'
+
+# }}}
+# {{{ Colors for man 
+
 alias man="\
 LESS_TERMCAP_mb=$'\e[6m'         \
 LESS_TERMCAP_md=$'\e[34m'        \
@@ -185,14 +198,6 @@ alias site-dl='wget --mirror --convert-links \
 # }}}
 # {{{ Misc shortcuts
 alias chx='chmod +x'
-
-alias ls='ls --color=auto'
-alias l='ls'
-alias la='ls -A'
-alias ll='ls -lh'
-# alias l.='ls -d .[^.]*' # just quiet
-# dash does not understand [^...]
-alias l.='sh -c "ls --color -d .[!.]*" 2>/dev/null || true'
 
 alias free='free -h --si'
 
