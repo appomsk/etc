@@ -10,7 +10,7 @@
 # for ssh logins, install and configure the libpam-umask package.
 # umask 022
 
-# Why?
+# bash does not read .bashrc when starting as login shell
 # # if running bash
 # if [ -n "$BASH_VERSION" ]; then
 #     # include .bashrc if it exists
