@@ -1,0 +1,11 @@
+#!/bin/sh
+
+url=$(curl -s https://api.github.com/repos/antonmedv/fx/releases/latest |
+    grep -o "https://.*fx_linux_amd64")
+binary=fx
+
+cd $HOME/bin
+echo Installing $binary...
+
+curl -sLo $binary $url
+chmod +x $binary

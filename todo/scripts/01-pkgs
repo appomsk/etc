@@ -1,0 +1,41 @@
+#!/bin/sh
+sudo -S apt-get -y update
+sudo -S apt-get -y upgrade
+sudo -S apt-get -y install \
+    jq          \
+    fzf         \
+    fd-find     \
+    ripgrep     \
+    shellcheck  \
+    trash-cli   \
+    unrar       \
+    p7zip-full  \
+    rar         \
+    aria2       \
+    mc          \
+    vifm        \
+    tree        \
+    git         \
+    tmux        \
+    zsh         \
+    zsh-doc     \
+    vim         \
+    gawk        \
+    htop        \
+    lynx        \
+    curl        \
+    wget        \
+    atool       \
+    vim-gtk3    \
+    xclip       \
+    xsel        \
+    wmctrl      \
+    cmake       \
+    perl-doc    \
+    bat 	\
+    ripgrep	\
+    translate-shell \
+    xdotool     \
+    exuberant-ctags \
+    build-essential
+

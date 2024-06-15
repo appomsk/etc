@@ -1,0 +1,29 @@
+#!/bin/sh
+
+SCR=$HOME/etc/conf/scripts
+
+# install curl and git
+if ! { command -v curl && command -v git ;} >/dev/null; then 
+    echo Error: curl or git is not installed >&2
+    exit 1
+fi
+
+$SCR/install-speedtest
+$SCR/install-trans
+$SCR/install-youtube-dl
+$SCR/install-fzf
+$SCR/install-ipython
+
+echo Done
+echo ===========================================================
+echo Do not forget:
+echo 1. install bat deb from
+echo https://github.com/sharkdp/bat/releases/latest
+echo 2. install nvim deb from
+echo https://github.com/neovim/neovim/releases/latest
+echo 3. install FreeFileSync
+echo https://freefilesync.org/download.php
+echo 4. install MS code
+echo https://code.visualstudio.com/download
+echo 5. install tig
+echo https://github.com/jonas/tig

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo Installing pip and ipython
+
+if ! command -v pip >/dev/null; then
+    echo WARNING: it does not work. 
+    echo Install python-pip OR python3-pip from package manager
+    exit 1
+fi
+
+
+
+# cd /tmp
+# curl -sLo get-pip.py https://bootstrap.pypa.io/get-pip.py
+# python3 get-pip.py --no-warn-script-location
+
+pip -q install ipython
+
+mkdir -p ~/.ipython/profile_default && 
+    cd ~/.ipython/profile_default
+
+ln -s ~/etc/conf/misc/ipython_config.py 

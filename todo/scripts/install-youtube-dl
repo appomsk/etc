@@ -1,0 +1,10 @@
+#!/bin/sh
+
+binary=youtube-dl
+url=https://yt-dl.org/downloads/latest/youtube-dl
+
+echo Installing $binary...
+
+curl -sLo $binary $url
+chmod +x $binary
+mv $binary $HOME/bin

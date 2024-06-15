@@ -41,6 +41,6 @@ export PERL5LIB
 #    *) MANPATH="$_t:$MANPATH" ;;
 #esac
 #export MANPATH
-
-unset _t
+#
+#unset _t
 END

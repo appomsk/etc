@@ -1,0 +1,50 @@
+#!/bin/sh
+# echo '
+# fonts-beng
+# fonts-gubbi
+# fonts-knda
+# fonts-kalapi
+# fonts-gujr
+# fonts-kalapi
+# fonts-lohit
+# fonts-pagul
+# fonts-orya
+# fonts-tlwg
+# fonts-smc
+# fonts-guru
+# fonts-guru-extra
+# fonts-kacst
+# fonts-kacst-one
+# fonts-khmeros-core
+# fonts-lao
+# fonts-lklug-sinhala
+# fonts-lohit-guru
+# fonts-nanum
+# fonts-sil-abyssinica
+# fonts-sil-padauk
+# fonts-takao-pgothic
+# fonts-thai-tlwg
+# fonts-tibetan-machine
+# fonts-tlwg-garuda
+# fonts-tlwg-kinnari
+# fonts-tlwg-laksaman
+# fonts-tlwg-loma
+# fonts-tlwg-mono
+# fonts-tlwg-norasi
+# fonts-tlwg-purisa
+# fonts-tlwg-sawasdee
+# fonts-tlwg-typewriter
+# fonts-tlwg-typist
+# fonts-tlwg-typo
+# fonts-tlwg-umpush
+# fonts-tlwg-waree
+# ttf-indic-fonts-core
+# fonts-wqy-microhei 
+# ttf-punjabi-fonts
+# ' | while read pkg; do
+#     sudo apt-get -y purge $pkg 2>/dev/null 
+# done 
+
+sudo apt-get remove "fonts-kacst*" "fonts-khmeros*" fonts-lklug-sinhala fonts-guru-extra "fonts-nanum*" fonts-noto-cjk "fonts-takao*" fonts-tibetan-machine fonts-lao fonts-sil-padauk fonts-sil-abyssinica "fonts-tlwg-*" "fonts-lohit-*" fonts-beng-extra fonts-gargi fonts-gubbi fonts-gujr-extra fonts-kalapi "fonts-samyak*" fonts-navilu fonts-nakula fonts-orya-extra fonts-pagul fonts-sarai "fonts-telu*" "fonts-wqy*" "fonts-smc*" fonts-deva-extra fonts-sahadeva
+
+

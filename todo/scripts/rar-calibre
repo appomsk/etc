@@ -1,0 +1,13 @@
+#!/bin/sh
+# -v3000000k  \ about 3Gb
+# -ma5        \ 5 version of the archive
+# -m0         \ only store - not compress
+# -rr         \ recovery record
+# -t          \ test after finish
+rar a \
+    -v3000000k  \
+    -ma5        \
+    -m0         \
+    -rr         \
+    -t          \
+    calibre.rar /home/yazu/calibre

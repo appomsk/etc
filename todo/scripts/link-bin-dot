@@ -1,0 +1,25 @@
+#!/bin/sh
+
+### From 02-home
+
+dotfiles="$HOME/etc/conf/dot"
+bin="$HOME/etc/conf/bin"
+backup="$HOME/.cache/backup"
+conf="$HOME/etc/conf"
+
+### Dotfiles
+
+cd $HOME && for f in $dotfiles/*; do
+    tmp=`basename "$f"`
+    mv -v ".$tmp" "$backup/dot.$tmp"
+    ln -v -sf "$f" ".$tmp"
+done
+
+### Bin
+
+cd $HOME && ln -sf $HOME/.local/bin 
+cd $HOME/bin
+
+for f in $bin/*; do
+    ln -v -sf "$f"
+done

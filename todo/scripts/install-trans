@@ -1,0 +1,10 @@
+#!/bin/sh
+
+binary=trans
+url=git.io/trans
+
+cd $HOME/bin
+echo Installing $binary...
+
+curl -sLo $binary $url
+chmod +x $binary

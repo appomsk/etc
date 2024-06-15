@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# ???
+# sudo -S pacman -Syy
+
+sudo -S pacman -Syu
+
+sudo -S pacman -S  \
+    jq          \
+    fzf         \
+    fd          \
+    ripgrep     \
+    trash-cli   \
+    unrar       \
+    p7zip       \
+    aria2       \
+    mc          \
+    vifm        \
+    tree        \
+    git         \
+    tmux        \
+    zsh         \
+    zsh-doc     \
+    gvim        \
+    htop        \
+    lynx        \
+    curl        \
+    wget        \
+    atool       \
+    xclip       \
+    xsel        \
+    wmctrl      \
+    cmake       \
+    speedtest-cli   \
+    translate-shell \
+    fzf             \
+    python-pip      \
+    bat             \
+    neovim          \
+    lsb-release
+
+#    vim-gtk3 + vim  => gvim
+#    rar         \
+#    shellcheck  - try to install a lot of haskell deps 
+

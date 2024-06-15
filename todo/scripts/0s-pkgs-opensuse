@@ -1,0 +1,47 @@
+#!/bin/sh
+    # - zsh-doc rar vim-gtk3 trash-cli build-essential
+    # + zip perl-doc gvim fzf-zsh-integration bat neovim xkb-switch
+    # <> shellcheck ShellCheck
+    # instead of build-essential there is devel_basis
+    # TODO nodejs nvim
+    # TODO gh lazygit
+sudo -S zypper update &&
+sudo -S zypper install \
+    jq          \
+    fzf         \
+    fd 		\
+    ripgrep     \
+    ShellCheck  \
+    unrar       \
+    7zip	\
+    aria2       \
+    mc          \
+    vifm        \
+    tree        \
+    git         \
+    tmux        \
+    zsh         \
+    vim         \
+    gawk        \
+    htop        \
+    lynx        \
+    curl        \
+    wget        \
+    atool       \
+    xclip       \
+    xsel        \
+    wmctrl      \
+    cmake       \
+    perl-doc    \
+    gvim	\
+    zip		\
+    fzf-zsh-integration \
+    bat 	\
+    neovim	\
+    xkb-switch  \
+    translate-shell \
+    patterns-devel-base-devel_basis
+
+#    python$(python3 --version | grep -o 3.1. | sed 's/\.//')-ipython \
+
+    
