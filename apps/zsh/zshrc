@@ -426,6 +426,6 @@ elif [[ -r /etc/zsh_command_not_found ]]; then
 # WSL
 # elif grep -qi microsoft /proc/version; then
 elif [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
-    source $HOME/etc/config/misc/cygwin/wslrc
+     source $ETC/local/wslrc
 fi
 # }}}

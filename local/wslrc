@@ -1,0 +1,2 @@
+# Fix for tmux on openSuse with WSL2
+export TMUX_TMPDIR='/tmp'
