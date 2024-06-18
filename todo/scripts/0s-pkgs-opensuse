@@ -40,6 +40,8 @@ sudo -S zypper install \
     neovim	\
     xkb-switch  \
     translate-shell \
+    psmisc	\
+    lsb-release \
     patterns-devel-base-devel_basis
 
 #    python$(python3 --version | grep -o 3.1. | sed 's/\.//')-ipython \

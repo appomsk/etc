@@ -159,6 +159,7 @@ alias l='ls'
 alias la='ls -A'
 alias ll='ls -lh'
 alias lla='ls -lA'
+alias lld='ls -ld'
 # alias l.='ls -d .[^.]*' # just quiet
 # dash does not understand [^...]
 alias l.='sh -c "ls --color -d .[!.]*" 2>/dev/null || true'

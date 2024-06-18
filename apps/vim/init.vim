@@ -12,6 +12,12 @@ set nocompatible
 
 " Heredoc highlighting
 let g:vimsyn_embed = 'l'  " support embedded lua, python and ruby
+" NOPE It doesn't work.
+" See: https://stackoverflow.com/questions/74448018/neovim-broken-syntax-highlighting-after-heredoc-lua-eof-in-vimscript
+" from 10.22 to 06.24 the problem is not gone
+" Workaround from the comment: reverting to v0.7.2 lua syntax:
+" !sudo curl -sS https://raw.githubusercontent.com/neovim/neovim/v0.7.2/runtime/syntax/lua.vim -o $VIMRUNTIME/syntax/lua.vim 
+" It does not work with appimage
 
 " {{{ Плагины 
 
