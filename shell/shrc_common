@@ -260,10 +260,11 @@ function _M() {
 alias M=_M
 
 # Quick edit configs
-alias ez='vim ~/.zshrc && source ~/.zshrc'
-alias et='vim ~/.tmux.conf'
-alias es='vim $SHRC_DIR/shrc_common &&
-                source $SHRC_DIR/shrc_common'
+alias ,ez='$VISUAL ~/.zshrc && source ~/.zshrc'
+alias ,et='$VISUAL ~/.tmux.conf'
+alias ,es='$VISUAL $SHRC_DIR/shrc_common &&
+                        source $SHRC_DIR/shrc_common'
+alias ,el='$VISUAL $ETC/local/localrc'
 
 alias out='tmux kill-server 2>/dev/null; exit'
 
