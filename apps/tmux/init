@@ -17,5 +17,3 @@ app=$(realpath $(dirname $0))
 ln -sf $app/tmux.conf $HOME/.tmux.conf
 
 mkdir -p $LIB/tmux
-cp $app/tmux-dark-medium.conf $LIB/tmux
-
