@@ -15,7 +15,6 @@ PROFILED="$VAR/profile.d"
 [ -e "$PROFILED" ] || {
     echo "$PROFILED does not exist" >&2; exit 1; }
 
-
 mkdir -p $LIB/perl
 cat <<'END' >$PROFILED/perl-dirs
 export PERL_BASE=$LIB/perl
@@ -33,14 +32,16 @@ case ":$PERL5LIB:" in
 esac
 export PERL5LIB
 
-# Manpath should be empty or include all man-pathes
-#_t="$PERL_BASE/man"
-#case ":$MANPATH:" in
-#    *:"$_t":*) ;;
-#    "::") MANPATH="$_t" ;;
-#    *) MANPATH="$_t:$MANPATH" ;;
-#esac
-#export MANPATH
-#
-#unset _t
+# https://unix.stackexchange.com/questions/344603/how-to-append-to-manpath
+t=$PERL_BASE/man
+if [ "$MANPATH" ]; then
+    MANPATH="$t:$MANPATH"
+elif command manpath >/dev/null ; then
+    MANPATH="$t:$(manpath -g)"
+else
+    MANPATH="$t:"
+fi
+export MANPATH
+
+unset t
 END

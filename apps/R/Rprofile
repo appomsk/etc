@@ -1,8 +1,7 @@
-
-! [ "$LIB" ] && { echo '$LIB is not set' >&2; exit 1; } 
+# ! [ "$LIB" ] && { echo '$LIB is not set' >&2; exit 1; } 
 
 # the dir must exist
-.libPaths("~/$LIB/R/Rlib")
+.libPaths("$LIB/R/Rlib")
 
 options(reticulate.repl.quiet = TRUE)
 

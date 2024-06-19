@@ -1,7 +1,7 @@
 # vim: ft=zsh fdm=marker
 # Prelude {{{
 
-source ~/.zprofile
+# source ~/.zprofile
 _zshdir=$LIB/zsh
 export ZPLUGS=$_zshdir/plugs
 

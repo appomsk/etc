@@ -1,7 +1,9 @@
 # -*- mode: Shell -*- vim: ft=sh
 
+PROGPATH=$(realpath $0)
+
 ## Update
-#    pkup:  Update/upgrade the system
+#    pkup: Update/upgrade the system
 
 alias pkup='sudo apt update \
     && sudo apt -y upgrade \
@@ -13,11 +15,11 @@ alias pkupdate='sudo apt update'
 # upgrade 
 alias pkupgrade='sudo apt upgrade'
 
-# TODO
-alias pkupf='sudo apt-get dist-upgrade'
+# upgrade
+alias pkdist-upgrade='sudo apt-get dist-upgrade'
 
 ## Install 
-#    pki PKG: install package
+#    pki PKG: Install package
 
 # alias pki='sudo apt install'
 # zsh TODO
@@ -28,9 +30,8 @@ alias pki='noglob sudo apt-get install '
 alias pkinstall-local='sudo dpkg -i'
 
 ## Remove
-#    pkr PKG: remove package
+#    pkr PKG: Remove package
 
-# zsh TOD
 alias pkr='noglob sudo apt-get remove --purge '
 # alias pkr='sudo apt-get remove --purge'
 
@@ -39,9 +40,18 @@ alias pkr='noglob sudo apt-get remove --purge '
 # alias pkremove-force=''
 
 ## Search 
-#    pks  PAT [PAT2]: Search PAT & PAT2 in known packages
+#    pks PAT [PAT2]: Search PAT & PAT2 in known packages
 
-alias pks='apt-cache search'
+function _pks {
+    if [ $# = 2 ]; then
+        apt-cache search "$1" | grep -i "$2"
+    elif [ $# = 1 ]; then
+        apt-cache search "$1"
+    else 
+        echo 'Usage: pks  PAT [PAT2]'
+    fi
+}
+alias pks=_pks
 # alias pkss='aptitude search'
 
 # TODO
@@ -49,7 +59,7 @@ alias pks='apt-cache search'
 # alias pksx='axi-cache search'
 
 ## Info
-#    pkd PKG: describe a package
+#    pkd PKG: Describe a package
 
 alias pkd='apt-cache show'
 # alias pkd1='apt show'
@@ -57,20 +67,33 @@ alias pkd='apt-cache show'
 # TODO installed? dpkg --status but only for installed
 
 ## Files
-#    pkl PKG: list all files owned by a package
+#    pkl PKG: List all files owned by a package
 
-alias pkl='dpkg-query -L'
+function _pkl {
+    [ $# != 1 ] && { echo "Usage: pkl PACKAGE"; return 1; } >&2
+    dpkg-query -L "$1" | $PAGER
+}
+alias pkl=_pkl
 
 ## File owner
-#    pkf FILENAMEPART: Find package that owns the file
+#    pkf PART: Find package by the filename PART
 
 # searches for given string in filename
-alias pkf='dpkg -S'
+function _pkf {
+    local f
+    case "$1" in
+        *[*?]* ) f="$1" ;;
+        */* ) [ -e "$1" ] && f=$(realpath $1) ;;
+        *)    f="$1";;
+    esac
+    dpkg -S "$f"
+}
+alias pkf=_pkf
 
 ## Packages
-#    pkp: list all installed packages
+#    pkp: List all installed packages
 
-alias pkp="dpkg -l | tail -n+6 | awk '{printf \"%-30s %s\n\", \$2, \$3}'"
+alias pkp="dpkg -l | tail -n+6 | awk '{printf \"%-30s %s\n\", \$2, \$3}' | $PAGER"
 # alias pkp='apt --installed list'
 
 # list all known packages
@@ -82,11 +105,23 @@ alias pklist-all='apt-cache pkgnames'
 
 alias pkc='sudo apt-get clean && sudo apt-get -y autoremove'
 
+## View aliases
+#    pkv: View package-management aliases
+#    pkview: View the whole file with aliases
+
+alias pkv="cat $PROGPATH             \
+    | sed -n '/^##/,/^$/p'           \
+    | sed 's/^## //; s/^#//; /^$/d'  \
+    | awk -F: 'NF == 2 { printf (\"%-20s%s\\n\", \$1, \$2); next } 1' \
+    | $PAGER"
+
+alias pkview="vv $PROGPATH"
+
 # statistics
 alias pkstats='apt-cache stats'
 
+unset PROGPATH
+
 ## More
-#
 # * https://ubuntu.com/server/docs/package-management 
-#
 # * https://help.ubuntu.com/community/AptGet/Howto

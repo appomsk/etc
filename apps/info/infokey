@@ -1,29 +1,25 @@
 # See `info info infokey` for more vi-keys
 
+# l		forward-char
+# h		backward-char
+# ^e		down-line
+# ^y		up-line
 j		next-line
 k		prev-line
-l		forward-char
-h		backward-char
-^e		down-line
-^y		up-line
+^j		down-line
+^k		up-line
 \kD		scroll-forward-page-only # PgDown
 \kU		scroll-backward-page-only # PgUp
-g		beginning-of-node
-G		end-of-node
+^D		scroll-forward-page-only # PgDown
+kU		scroll-backward-page-only # PgUp
 \kh		beginning-of-node # Home
 \ke		end-of-node # End
--		history-node
-n		next-node
-p		prev-node
-t		top-node
-d		dir-node
-\mu		clear-search
-
 ^o              history-node
 
-:q              quit
-ZZ              quit
+^l              clear-search
+^\              tree-search
 
+\kD            echo-area-scroll-completions-window
 
 #var
 highlight-searches=On
