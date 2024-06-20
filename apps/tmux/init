@@ -17,3 +17,4 @@ app=$(realpath $(dirname $0))
 ln -sf $app/tmux.conf $HOME/.tmux.conf
 
 mkdir -p $LIB/tmux
+ln -sf $LIB/tmux $HOME/.tmux
