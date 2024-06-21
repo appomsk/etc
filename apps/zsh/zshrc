@@ -1,7 +1,7 @@
 # vim: ft=zsh fdm=marker
 # Prelude {{{
 
-source ~/.zprofile
+# source ~/.zprofile
 _zshdir=$LIB/zsh
 export ZPLUGS=$_zshdir/plugs
 
@@ -428,4 +428,8 @@ elif [[ -r /etc/zsh_command_not_found ]]; then
 elif [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
      source $ETC/local/wslrc
 fi
+
+# for experiments
+[[ -f $ETC/local/localrc ]] && . $ETC/local/localrc || true
+
 # }}}

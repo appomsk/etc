@@ -1,13 +1,15 @@
 # vim: ft=sh fdm=marker
 
 # in .bashrc: alias noglob= # seems to work.
-# It's simple to manage noglobs here
+# It's simpler to manage noglobs here
 
 # Environment {{{
 
-SHRC_DIR=`dirname $0`
-if [ "$BASH_SOURCE" ]; then
-    SHRC_DIR=`dirname ${BASH_SOURCE}`
+if ! [ "$SHRC_DIR" ]; then
+    SHRC_DIR=`dirname $0`
+    if [ "$BASH_SOURCE" ]; then
+        SHRC_DIR=`dirname ${BASH_SOURCE}`
+    fi
 fi
 
 export LESS='FReiq'
@@ -49,13 +51,14 @@ ulimit -S -c 0 >&/dev/null
 # Settings for umask
 umask 002
 
-eval "$(dircolors)"
+command dircolors >/dev/null && eval "$(dircolors)"
 # Change unreadable other writable dirs (for fat and ntfs):
 export LS_COLORS="$LS_COLORS:ow=01;35:"
 
 export LANG=en_US.UTF-8
 # LC_ALL override every other LC_* variable
 export LC_ALL=C.UTF-8
+
 # }}}
 # {{{ Includes
 
@@ -63,17 +66,13 @@ source $SHRC_DIR/gits
 
 # }}}
 # Debian/Arch/Manjaro {{{
-# there are similar commands for arch and fedora
-# TODO pklf - list files of package
+# https://wiki.archlinux.org/title/Pacman/Rosetta 
+# but there are TOOOO much
+# and there is https://github.com/icy/pacapt (universal pacman)
 case `lsb_release -d` in
 *Debian* | *Ubuntu* | *Mint*)
-    local src=$SHRC_DIR/apt.src
-    alias pkview="$PAGER $src"
-    alias pkv="cat $src            \
-        | sed -n '/^##/,/^$/p'     \
-        | sed 's/^## //; s/^#//'   \
-        | $PAGER"
-    source $src
+    source $SHRC_DIR/apt.src 
+
 # OTHER
 
     # and ln -s $HOME/bin/fd /usr/bin/fdfind
@@ -81,13 +80,14 @@ case `lsb_release -d` in
     ;;
 # TODO: 
 *Manjaro*)
-    local src=$SHRC_DIR/pamac.src
+    t=$SHRC_DIR/pamac.src
     alias pkview="$PAGER $src"
-    alias pkv="cat $src            \
+    alias pkv="cat $t
         | sed -n '/^##/,/^$/p'     \
         | sed 's/^## //; s/^#//'   \
         | $PAGER"
-    source $src
+    source $t
+    unset t
     ;;
 *Arch*)
     # clean
@@ -198,6 +198,7 @@ alias site-dl='wget --mirror --convert-links \
     --adjust-extension --page-requisites --no-parent' 
 # }}}
 # {{{ Misc shortcuts
+
 alias chx='chmod +x'
 
 alias free='free -h --si'
@@ -232,6 +233,7 @@ function md
 	mkdir -vp "$1"
 	cd "$1"
 }
+
 alias mkdir='mkdir -p'
 
 # remove caps at all!
@@ -260,14 +262,22 @@ function _M() {
 alias M=_M
 
 # Quick edit configs
-alias ez='vim ~/.zshrc && source ~/.zshrc'
-alias et='vim ~/.tmux.conf'
-alias es='vim $SHRC_DIR/shrc_common &&
-                source $SHRC_DIR/shrc_common'
+alias ,ez='$VISUAL ~/.zshrc && source ~/.zshrc'
+alias ,et='$VISUAL ~/.tmux.conf'
+alias ,es='$VISUAL $SHRC_DIR/shrc_common &&
+                        source $SHRC_DIR/shrc_common'
+alias ,el='$VISUAL $ETC/local/localrc'
 
 alias out='tmux kill-server 2>/dev/null; exit'
 
 alias ts='printf "%-10s%3d\n%-10s%3d\n" rows $LINES columns $COLUMNS'
+
+# try 
+alias ,cu='cd ~/usr/ && l'
+alias ,cp='cd ~/proj && l'
+alias ,cw='cd ~/work && l'
+alias ,ce='cd $ETC &&   l && echo "[GIT STATUS]": && git status -s'
+alias ,cn='cd $NOTES && l && echo "[GIT STATUS]": && git status -s'
 
 # GUI
 fx=firefox

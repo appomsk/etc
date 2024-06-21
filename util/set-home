@@ -56,6 +56,6 @@ cd "$HOME" || exit
 mkdir -p .ssh
 chmod 700 .ssh
 cd .ssh || exit
-chmod 600 *
+[ "$(ls)" ] && chmod 600 *
 
 true

@@ -5,7 +5,7 @@
 let VIMDATA = $LIB . '/vim'
 
 " for undos (formats nvim and vim for undofiles are incompatible
-let VIMUNDO = VIMDATA . (has('nvim') ? '/nvim/undo' : '/vim/undo')
+let VIMUNDO = VIMDATA . (has('nvim') ? '/nvim-undo' : '/vim-undo')
 
 " for vim launched with -u option
 set nocompatible
@@ -20,11 +20,6 @@ let g:vimsyn_embed = 'l'  " support embedded lua, python and ruby
 " It does not work with appimage
 
 " {{{ Плагины 
-
-if empty(glob(VIMDATA . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.VIMDATA.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
 
 call plug#begin(VIMDATA . '/plugged')
 
