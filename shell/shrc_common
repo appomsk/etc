@@ -272,6 +272,13 @@ alias out='tmux kill-server 2>/dev/null; exit'
 
 alias ts='printf "%-10s%3d\n%-10s%3d\n" rows $LINES columns $COLUMNS'
 
+# try 
+alias ,cu='cd ~/usr/ && l'
+alias ,cp='cd ~/proj && l'
+alias ,cw='cd ~/work && l'
+alias ,ce='cd $ETC &&   l && echo "[GIT STATUS]": && git status -s'
+alias ,cn='cd $NOTES && l && echo "[GIT STATUS]": && git status -s'
+
 # GUI
 fx=firefox
 alias ee=subl

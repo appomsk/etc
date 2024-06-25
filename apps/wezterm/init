@@ -16,12 +16,10 @@ PROFILED="$VAR/profile.d"
     echo "$PROFILED does not exist" >&2; exit 1; }
 
 appdir=$(realpath $(dirname $0))
-app=$(basename $appdir)
+app=$(basename "$appdir")
 
-# ln -sf $app/<SOMERC> $HOME/<.SOMERC>
+# ~/.config/wezterm/wezterm.lua
+config=$app.lua
 
-# mkdir -p $LIB/<SOMEAPP>
-
-# cat <<'END' >$PROFILED/ruby-dirs
-# ...
-# END
+t="${XDG_CONFIG_HOME-$HOME/.config}/$app"
+mkdir -p "$t" && cd "$t" && ln -sf $appdir/$config

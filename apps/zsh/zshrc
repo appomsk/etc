@@ -433,3 +433,7 @@ fi
 [[ -f $ETC/local/localrc ]] && . $ETC/local/localrc || true
 
 # }}}
+# {{{ Temp, work, try
+
+alias ,cvw='cd   $HOME/var/nvim-repo/working/config/nvim'
+alias ,evw='nvim $HOME/var/nvim-repo/working/config/nvim/init.lua'

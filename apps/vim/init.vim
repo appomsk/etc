@@ -5,7 +5,7 @@
 let VIMDATA = $LIB . '/vim'
 
 " for undos (formats nvim and vim for undofiles are incompatible
-let VIMUNDO = VIMDATA . (has('nvim') ? '/nvim/undo' : '/vim/undo')
+let VIMUNDO = VIMDATA . (has('nvim') ? '/nvim-undo' : '/vim-undo')
 
 " for vim launched with -u option
 set nocompatible
@@ -20,11 +20,6 @@ let g:vimsyn_embed = 'l'  " support embedded lua, python and ruby
 " It does not work with appimage
 
 " {{{ Плагины 
-
-if empty(glob(VIMDATA . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.VIMDATA.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
 
 call plug#begin(VIMDATA . '/plugged')
 
@@ -51,7 +46,6 @@ Plug 'https://github.com/tpope/vim-sleuth'
 Plug 'https://github.com/dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'https://github.com/preservim/vim-pencil'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 Plug 'https://github.com/preservim/vimux'
 Plug 'https://github.com/tmux-plugins/vim-tmux'
@@ -650,17 +644,6 @@ nmap <Leader>ts vip<Leader>ts<CR>
 " Plug 'https://github.com/preservim/vimux'
 
 " }}}
-" {{{ Writer
-
-" +Plug 'https://github.com/preservim/vim-pencil'
-let g:pencil#wrapModeDefault = 'hard'
-augroup pencil
-  autocmd!
-  autocmd FileType markdown call pencil#init({'wrap': 'soft', 'autoformat':0})
-  autocmd FileType text call pencil#init()
-augroup END
-
-" }}}
 " {{{ Devel
 
 "if has('nvim')
@@ -728,6 +711,13 @@ if has('gui_running')
     " visual copying copy to clipboard too
     set guioptions+=a
 
+endif
+
+" }}}
+" {{{ Lua
+
+if has('nvim')
+  " lua require 'basic'
 endif
 
 " }}}
