@@ -1,6 +1,6 @@
 #!/bin/sh
 
-files="bin ${ETC#$HOME/} ${LIB#$HOME/}"
+files="bin ${ETC#$HOME/} ${LIB#$HOME/} ${NOTES#$HOME/}"
 filesproj="proj work"
 filesfull="$files $filesproj var"
 filesbrave=".config/BraveSoftware .cache/BraveSoftware"

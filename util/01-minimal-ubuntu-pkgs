@@ -1,0 +1,26 @@
+#!/bin/sh
+sudo -S apt-get -y update
+sudo -S apt-get -y upgrade
+sudo -S apt-get -y install \
+    fzf         \
+    unrar       \
+    p7zip-full  \
+    rar         \
+    aria2       \
+    mc          \
+    vifm        \
+    tree        \
+    git         \
+    tmux        \
+    zsh         \
+    vim         \
+    gawk        \
+    htop        \
+    lynx        \
+    curl        \
+    wget        \
+    atool       \
+    vim	        \
+    man		\
+    universal-ctags
+
