@@ -37,8 +37,23 @@ sudo -S pacman -S  \
     python-pip      \
     bat             \
     neovim          \
-    lsb-release
-
+    lsb-release     \
+    ttf-ubuntu-mono-nerd    \
+    yt-dlp          \
+    hyperfine       \
+    ruby            \
+    ruby-pry        \
+    ruby-docs       \
+    tk              \
+    julia           \
+    gnuplot         \
+    zip             \
+    unzip           \
+    tig             \
+    lazygit         \
+    base-devel      \
+# yay firefox-esr-bin xkb-switch
+# or pamac build
 #    vim-gtk3 + vim  => gvim
 #    rar         \
 #    shellcheck  - try to install a lot of haskell deps 
