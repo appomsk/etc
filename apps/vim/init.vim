@@ -17,22 +17,26 @@ let g:vimsyn_embed = 'l'  " support embedded lua, python and ruby
 " from 10.22 to 06.24 the problem is not gone
 " Workaround from the comment: reverting to v0.7.2 lua syntax:
 " !sudo curl -sS https://raw.githubusercontent.com/neovim/neovim/v0.7.2/runtime/syntax/lua.vim -o $VIMRUNTIME/syntax/lua.vim 
+" sudo curl -sS \
+" https://raw.githubusercontent.com/neovim/neovim/v0.7.2/runtime/syntax/lua.vim \
+" -o /usr/local/share/nvim/runtime/syntax/lua.vim 
+"
 " It does not work with appimage
 
 " {{{ Плагины 
 
 call plug#begin(VIMDATA . '/plugged')
 
-Plug 'https://github.com/sainnhe/gruvbox-material'
-Plug 'https://github.com/tpope/vim-rsi'
 if has('nvim')
+    Plug 'https://github.com/tpope/vim-sensible', { 'on': [] }
     Plug 'https://github.com/nvim-tree/nvim-web-devicons'
     Plug 'https://github.com/nvim-lualine/lualine.nvim'
     Plug 'https://github.com/nanozuki/tabby.nvim'
     Plug 'itchyny/lightline.vim', { 'on': [] }
     Plug 'https://github.com/folke/which-key.nvim'
-    Plug 'https://github.com/ervandew/supertab', {'on': [] }
+    Plug 'https://github.com/ervandew/supertab', { 'on': [] }
 else
+    Plug 'https://github.com/tpope/vim-sensible'
     Plug 'https://github.com/nvim-tree/nvim-web-devicons', { 'on': [] }
     Plug 'https://github.com/nvim-lualine/lualine.nvim', { 'on': [] }
     Plug 'https://github.com/nanozuki/tabby.nvim', { 'on': [] }
@@ -40,17 +44,21 @@ else
     Plug 'https://github.com/folke/which-key.nvim', { 'on': [] }
     Plug 'https://github.com/ervandew/supertab'
 endif
+Plug 'https://github.com/sainnhe/gruvbox-material'
+Plug 'https://github.com/tpope/vim-rsi'
 Plug 'https://github.com/lyokha/vim-xkbswitch'
 Plug 'https://github.com/godlygeek/tabular'
 Plug 'https://github.com/tpope/vim-sleuth'
-Plug 'https://github.com/dahu/vim-fanfingtastic'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'https://github.com/preservim/vim-pencil'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 Plug 'https://github.com/preservim/vimux'
 Plug 'https://github.com/tmux-plugins/vim-tmux'
+Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/tpope/vim-commentary'
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/dahu/vim-fanfingtastic'
 Plug 'https://github.com/lifepillar/vim-cheat40'
 
 " {{{ Plugins Check
@@ -73,6 +81,40 @@ call plug#end()
 
 " Истории
 
+" {{{ Sensible
+
+" +Plug -vim https://github.com/tpope/vim-sensible
+" {{{2 Neovim defaults
+" Neovim has set these as default
+if !has('nvim')
+
+  set nocompatible
+
+  syntax on                      " Syntax highlighting
+  filetype plugin indent on      " Automatically detect file types
+  set autoindent                 " Indent at the same level of the previous line
+  set autoread                   " Automatically read a file changed outside of vim
+  set backspace=indent,eol,start " Backspace for dummies
+  set complete-=i                " Exclude files completion
+  set display=lastline           " Show as much as possible of the last line
+  set encoding=utf-8             " Set default encoding
+  set history=10000              " Maximum history record
+  set hlsearch                   " Highlight search terms
+  set incsearch                  " Find as you type search
+  set laststatus=2               " Always show status line
+  set mouse=a                    " Automatically enable mouse usage
+  set smarttab                   " Smart tab
+  set ttyfast                    " Faster redrawing
+  set viminfo+=!                 " Viminfo include !
+  set wildmenu                   " Show list instead of just completing
+
+  set ttymouse=xterm2
+
+endif
+
+" 2}}}
+
+" }}}
 " {{{ Colors
 
 " See top/trending here: https://vimcolorschemes.com/
@@ -294,9 +336,10 @@ if !has('nvim')
 endif
 
 " Fix main operators. Y is already fixed. 
-" Try
-noremap V v$
-noremap vv 0V
+" Try - BAD IDEA but let's be there - for memory
+" noremap V v$
+" noremap vv 0V
+
 " S should do something else - cc is simpler and do the right thing
 " TODO for folds?
 noremap S <nop>
@@ -420,35 +463,6 @@ lang en_US.utf8
 " }}}
 " {{{ Editor
 
-" {{{ Neovim defaults
-" Neovim has set these as default
-if !has('nvim')
-
-  set nocompatible
-
-  syntax on                      " Syntax highlighting
-  filetype plugin indent on      " Automatically detect file types
-  set autoindent                 " Indent at the same level of the previous line
-  set autoread                   " Automatically read a file changed outside of vim
-  set backspace=indent,eol,start " Backspace for dummies
-  set complete-=i                " Exclude files completion
-  set display=lastline           " Show as much as possible of the last line
-  set encoding=utf-8             " Set default encoding
-  set history=10000              " Maximum history record
-  set hlsearch                   " Highlight search terms
-  set incsearch                  " Find as you type search
-  set laststatus=2               " Always show status line
-  set mouse=a                    " Automatically enable mouse usage
-  set smarttab                   " Smart tab
-  set ttyfast                    " Faster redrawing
-  set viminfo+=!                 " Viminfo include !
-  set wildmenu                   " Show list instead of just completing
-
-  set ttymouse=xterm2
-
-endif
-
-" }}}
 " {{{2 User Interface
 
 " skip startup message
@@ -512,9 +526,9 @@ set shiftround
 " {{{2 No backups
 
 " TRY. Backups
-" Справедливое замечание в инете - может быть помогли раз пять, но
+" Справедливое замечание в инете o свапах - может быть помогли раз пять, но
 " раздражали раз тысяч много
-set noswapfile
+
 set autowriteall
 augroup AUTOSAVE
   au!
@@ -537,15 +551,22 @@ let &undodir = VIMUNDO
 " +Plug 'https://github.com/godlygeek/tabular'
 " Detect tabstop and shiftwidth automatically
 " +Plug 'https://github.com/tpope/vim-sleuth'
+" TODO check clever-f.vim or https://github.com/justinmk/vim-sneak
+" (BETTER?)
 " Find a char, across lines
 " +Plug 'https://github.com/dahu/vim-fanfingtastic'
 
+" +Plug 'https://github.com/tpope/vim-repeat'
+
+" +Plug 'https://github.com/tpope/vim-commentary'
+
+" +Plug 'https://github.com/tpope/vim-surround'
+
 " CHECK
 " Plug 'https://github.com/dhruvasagar/vim-table-mode'
-" Plug 'https://github.com/tpope/vim-commentary'
-" Plug 'https://github.com/tpope/vim-surround'
 " Plug 'https://github.com/tpope/vim-speeddating'
-" Plug 'https://github.com/tpope/vim-repeat'
+" https://github.com/ntpeters/vim-better-whitespace
+" https://github.com/tpope/vim-obsession vs https://github.com/thaerkh/vim-workspace
 
 " }}}
 " {{{ TODO to check 
@@ -645,17 +666,6 @@ nmap <Leader>ts vip<Leader>ts<CR>
 " Plug 'https://github.com/preservim/vimux'
 
 " }}}
-" {{{ Writer
-
-" +Plug 'https://github.com/preservim/vim-pencil'
-let g:pencil#wrapModeDefault = 'hard'
-augroup pencil
-  autocmd!
-  autocmd FileType markdown call pencil#init({'wrap': 'soft', 'autoformat':0})
-  autocmd FileType text call pencil#init()
-augroup END
-
-" }}}
 " {{{ Devel
 
 "if has('nvim')
@@ -711,7 +721,7 @@ if has('gui_running')
 
     " set guifont=Consolas:h11:cRUSSIAN
     " set guifont=Consolas\ 12
-    set guifont=UbuntuSansMono\ NerdFont\ 13 
+    set guifont=UbuntuSansMono\ NerdFont\ 12
 
     set guioptions-=T
     set guioptions-=m
@@ -723,6 +733,13 @@ if has('gui_running')
     " visual copying copy to clipboard too
     set guioptions+=a
 
+endif
+
+" }}}
+" {{{ Lua
+
+if has('nvim')
+  " lua require 'basic'
 endif
 
 " }}}
