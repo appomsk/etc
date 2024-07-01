@@ -2,7 +2,7 @@
 
 files="bin ${ETC#$HOME/} ${LIB#$HOME/} ${NOTES#$HOME/}"
 filesproj="proj work"
-filesfull="$files $filesproj var"
+filesfull="$files $filesproj bin var"
 
 taroptions="--ignore-failed-read -czf"
 
