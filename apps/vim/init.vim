@@ -410,7 +410,7 @@ map! <F5> <ESC><F5>
 set fileencodings=utf-8,cp1251,latin1
 
 " For vim layouts TODO - mv in .vim?
-source ~/etc/conf/misc/vim/russian-utf8.vim
+source $ETC/apps/vim/russian-utf8.vim
 
 " As in emacs and C-^ always changed to alternative file
 " done in keymappings
@@ -443,8 +443,8 @@ endif
 
 " SPELL
 " Словари для русского языка.
-" mkdir -p ~/.vim/spell && 
-" cd ~/.vim/spell && 
+" mkdir -p VIMDATA/spell && 
+" cd VIMDATA/spell && 
 " wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.sug &&
 " wget http://ftp.vim.org/vim/runtime/spell/ru.utf-8.spl
 
