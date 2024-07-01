@@ -3,7 +3,6 @@
 files="bin ${ETC#$HOME/} ${LIB#$HOME/} ${NOTES#$HOME/}"
 filesproj="proj work"
 filesfull="$files $filesproj var"
-filesbrave=".config/BraveSoftware .cache/BraveSoftware"
 
 taroptions="--ignore-failed-read -czf"
 
@@ -13,14 +12,12 @@ Backup ~/$files
 
 With -p backup $filesproj
 With -f backup $filesfull
-With -b backup $filesbrave
 "
 
 case "$1" in
     -h | --help) echo "$usage"; exit ;;
     -p ) proj=1 ;;
     -f ) full=1 ;;
-    -b ) brave=1 ;;
     -* ) echo "$usage"; exit ;;
 esac
 
@@ -32,9 +29,6 @@ if [ "$proj" ]; then
 elif [ "$full" ]; then
     arj=$t-full.tar.gz
     files="$filesfull"
-elif [ "$brave" ]; then
-    arj=$t-brave.tar.gz
-    files="$filesbrave"
 fi
 
 cd $HOME

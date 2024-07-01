@@ -20,8 +20,7 @@ let g:vimsyn_embed = 'l'  " support embedded lua, python and ruby
 " sudo curl -sS \
 " https://raw.githubusercontent.com/neovim/neovim/v0.7.2/runtime/syntax/lua.vim \
 " -o /usr/local/share/nvim/runtime/syntax/lua.vim 
-"
-" It does not work with appimage
+" It does not work with appimage (of course).
 
 " {{{ Плагины 
 
@@ -392,11 +391,16 @@ nnoremap <silent> <leader>vs :w<CR>:source $MYVIMRC<CR>
 " }}}
 " {{{2 Examples
 
-noremap  <F5> :!./%<CR>
-map! <F5> <ESC><F5>
+" Save file (duplicate of <C-s>)
+noremap <silent> <F2> :w<CR><ESC>
+map! <F2> <ESC><F2>
+
 noremap <silent> <F4> <ESC>:set number! \| set cursorline! \|
     \ execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>
 map! <F4> <ESC><F4>i
+
+noremap  <F5> :!./%<CR>
+map! <F5> <ESC><F5>
 
 " }}}
 
@@ -481,9 +485,11 @@ set wildmode=list:longest,full
 
 set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
 
-" TODO Check anothers?
-" Allow backspace and cursor keys to cross line boundaries
-set whichwrap+=<,>,h,l
+" Allow cursor & h,l keys to cross line boundaries
+set whichwrap+=<,>,[,],h,l
+
+" Try 27.06.24 BAD IDEA
+" set nowrapscan
 
 set textwidth=72
 
